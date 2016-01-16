@@ -29,6 +29,7 @@ public class Player extends Sprite{
     private Animation marioJump;
     private float stateTimer;
     private boolean runningRight;
+    private boolean touchingGround;
 
 
     public Player (World world, PlayScreen screen){
@@ -39,6 +40,7 @@ public class Player extends Sprite{
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        touchingGround = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i = 1; i < 4; ++i){
@@ -115,34 +117,39 @@ public class Player extends Sprite{
 
     public void defineMario(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / QuackHack.PPM, 800 / QuackHack.PPM); // Mario start position
+        bdef.position.set(32 / QuackHack.PPM, 400 / QuackHack.PPM); // Mario start position
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / QuackHack.PPM);
+        shape.setRadius(128 / QuackHack.PPM);
 
         fdef.filter.categoryBits = QuackHack.MARIO_BIT;
-        fdef.filter.maskBits = QuackHack.DEFAULT_BIT | QuackHack.COIN_BIT | QuackHack.BRICK_BIT;
+        fdef.filter.maskBits = QuackHack.DEFAULT_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
 
         // This is generating a head sensor
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / QuackHack. PPM, 6 / QuackHack.PPM), new Vector2(2 / QuackHack. PPM, 6 / QuackHack.PPM));
+        head.set(new Vector2(-20 / QuackHack. PPM, 128 / QuackHack.PPM), new Vector2(20 / QuackHack. PPM, 128 / QuackHack.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("head");
 
         EdgeShape foot = new EdgeShape();
-        head.set(new Vector2(-2 / QuackHack. PPM, 0 / QuackHack.PPM), new Vector2(2 / QuackHack. PPM, 0 / QuackHack.PPM));
-        fdef.shape = head;
+        foot.set(new Vector2(-128 / QuackHack. PPM, -135 / QuackHack.PPM), new Vector2(128 / QuackHack. PPM, -135 / QuackHack.PPM));
+        fdef.shape = foot;
         fdef.isSensor = true;
-        b2body.createFixture(fdef).setUserData("foot");
+        b2body.createFixture(fdef).setUserData(this);
+    }
 
+    public void setTouching(boolean input){
+        touchingGround = input;
+    }
 
-
+    public boolean getTouching(){
+        return touchingGround;
     }
 }
