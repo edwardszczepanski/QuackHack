@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,8 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.edwardszczepanski.quackhack.QuackHack;
 
 /**
@@ -36,6 +35,7 @@ public class MenuScreen implements Screen {
     private Skin skin;
     private BitmapFont white, black;
     private TextureAtlas atlas;
+    private BitmapFont font;
 
     public MenuScreen(QuackHack game){
         this.game = game;
@@ -62,6 +62,12 @@ public class MenuScreen implements Screen {
         table = new Table(skin);
         table.setBounds(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.color.add(Color.BLACK);
+        parameter.size = 32;
+        font = generator.generateFont(parameter);
+
         // Creating fonts
         white = new BitmapFont(Gdx.files.internal("font/white32.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("font/black32.fnt"), false);
@@ -72,7 +78,7 @@ public class MenuScreen implements Screen {
         textButtonStyle.down = skin.getDrawable("button.down");
         textButtonStyle.pressedOffsetX = 1;
         textButtonStyle.pressedOffsetY = -1;
-        textButtonStyle.font = black;
+        textButtonStyle.font = font;
 
         buttonExit = new TextButton("EXIT", textButtonStyle);
         buttonExit.addListener(new ChangeListener() {

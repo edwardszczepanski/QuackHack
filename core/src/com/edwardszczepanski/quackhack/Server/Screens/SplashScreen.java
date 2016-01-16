@@ -8,8 +8,10 @@ package com.edwardszczepanski.quackhack.Server.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Tween.SpriteAccessor;
 
@@ -22,6 +24,7 @@ import aurelienribon.tweenengine.TweenManager;
 public class SplashScreen implements Screen{
     private QuackHack game;
     private Sprite splash;
+    private Sprite splash2;
     private TweenManager tweenManager;
 
     public SplashScreen(QuackHack game){
@@ -41,13 +44,13 @@ public class SplashScreen implements Screen{
 
     @Override
     public void show() {
-
         tweenManager = new TweenManager();
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 
-        Texture stamps = new Texture(Gdx.files.internal("stamps.png"));
-        splash = new Sprite(stamps);
+        splash = new Sprite(new Texture(Gdx.files.internal("inferno_duck.png")));
         splash.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        splash2 = new Sprite(new Texture(Gdx.files.internal("inferno_duck_2.png")));
+
 
         Tween.set(splash, SpriteAccessor.ALPHA).target(0).start(tweenManager);
         Tween.to(splash, SpriteAccessor.ALPHA, 2).target(1).repeatYoyo(1, 1.5f).setCallback(new TweenCallback() {
@@ -56,7 +59,6 @@ public class SplashScreen implements Screen{
                 game.setScreen(new MenuScreen(game));
             }
         }).start(tweenManager);
-
     }
 
     @Override
@@ -76,7 +78,7 @@ public class SplashScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        splash.setCenter(width / 2, height / 2);
+        splash.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
 
     @Override

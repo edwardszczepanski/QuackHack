@@ -32,7 +32,7 @@ public class Hud implements Disposable {
     private Label levelLabel;
     private Label worldLabel;
     private Label nameLabel;
-    private BitmapFont font12;
+    private BitmapFont font;
 
     public Hud(SpriteBatch sb){
         worldTimer = 300;
@@ -49,14 +49,14 @@ public class Hud implements Disposable {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 36;
-        BitmapFont font12 = generator.generateFont(parameter);
+        font = generator.generateFont(parameter);
 
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font12, Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(font12, Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(font12, Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(font12, Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(font12, Color.WHITE));
-        nameLabel = new Label("InfernoDucks", new Label.LabelStyle(font12, Color.WHITE));
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(font, Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
+        levelLabel = new Label("1-1", new Label.LabelStyle(font, Color.WHITE));
+        worldLabel = new Label("WORLD", new Label.LabelStyle(font, Color.WHITE));
+        nameLabel = new Label("InfernoDucks", new Label.LabelStyle(font, Color.WHITE));
 
         table.add(nameLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
