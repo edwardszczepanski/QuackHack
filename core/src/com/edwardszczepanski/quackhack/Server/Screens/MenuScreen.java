@@ -58,7 +58,6 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         atlas = new TextureAtlas("font/atlas.pack");
-        //skin = new Skin(atlas);
         skin = new Skin(Gdx.files.internal("font/menuSkin.json"), new TextureAtlas("font/atlas.pack"));
         table = new Table(skin);
         table.setBounds(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

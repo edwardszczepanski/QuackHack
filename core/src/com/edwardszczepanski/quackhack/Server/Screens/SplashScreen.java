@@ -3,19 +3,15 @@ package com.edwardszczepanski.quackhack.Server.Screens;
 /**
  * Created by edwardszc on 1/16/16.
  */
-public class SplashScreen {
-}
 
-/*
-package com.edwardszczepanski.ninecircles.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.edwardszczepanski.ninecircles.NineCircles;
-import com.edwardszczepanski.ninecircles.Tween.SpriteAccessor;
+import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Server.Tween.SpriteAccessor;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -24,11 +20,11 @@ import aurelienribon.tweenengine.TweenManager;
 
 
 public class SplashScreen implements Screen{
-    private NineCircles game;
+    private QuackHack game;
     private Sprite splash;
     private TweenManager tweenManager;
 
-    public SplashScreen(NineCircles game){
+    public SplashScreen(QuackHack game){
         this.game = game;
     }
 
@@ -39,7 +35,6 @@ public class SplashScreen implements Screen{
     }
 
     public void update(float delta){
-
         splash.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         handleInput(delta);
     }
@@ -58,7 +53,7 @@ public class SplashScreen implements Screen{
         Tween.to(splash, SpriteAccessor.ALPHA, 2).target(1).repeatYoyo(1, 1.5f).setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                game.setScreen(new PlayScreen(game));
+                game.setScreen(new MenuScreen(game));
             }
         }).start(tweenManager);
 
@@ -105,4 +100,3 @@ public class SplashScreen implements Screen{
     }
 }
 
- */

@@ -8,13 +8,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.edwardszczepanski.quackhack.Server.Screens.MenuScreen;
+import com.edwardszczepanski.quackhack.Server.Screens.SplashScreen;
 
 /**
  * Created by edwardszc on 1/15/16.
  */
 
 public class QuackHack extends Game {
-	public static final float PPM = 100;
+	public static final float PPM = 128;
 	public static final float V_WIDTH = 960;
 	public static final float V_HEIGHT = 540;
 
@@ -40,7 +41,7 @@ public class QuackHack extends Game {
 			// Run server
 			server = new NetServer();
 			batch = new SpriteBatch();
-			setScreen(new MenuScreen(game));
+			setScreen(new SplashScreen(game));
 		} else {
 			// Run client
 			client = new NetClient();

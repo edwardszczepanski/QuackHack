@@ -23,6 +23,7 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+        /*
         for(MapObject object: map.getLayers().get(0).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -34,7 +35,8 @@ public class B2WorldCreator {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
-        /*
+        */
+
         for(int i = 2; i <=3; ++i){
             for(MapObject object: map.getLayers().get(i).getObjects().getByType(RectangleMapObject.class)){
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -58,6 +60,6 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Brick(world, map, rect);
         }
-        */
+
     }
 }
