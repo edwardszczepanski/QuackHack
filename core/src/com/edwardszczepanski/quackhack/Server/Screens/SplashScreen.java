@@ -38,7 +38,13 @@ public class SplashScreen implements Screen{
     }
 
     public void update(float delta){
-        splash.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        if(System.nanoTime() % 1000000 > 500000){
+            splash = new Sprite(new Texture(Gdx.files.internal("inferno_duck.png")));
+        }
+        else{
+            splash = new Sprite(new Texture(Gdx.files.internal("inferno_duck_2.png")));
+        }
+
         handleInput(delta);
     }
 
@@ -48,12 +54,10 @@ public class SplashScreen implements Screen{
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 
         splash = new Sprite(new Texture(Gdx.files.internal("inferno_duck.png")));
-        splash.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        splash2 = new Sprite(new Texture(Gdx.files.internal("inferno_duck_2.png")));
-
+        //splash.setPosition(Gdx.graphics.getWidth()/2 - splash.getWidth() / 2, Gdx.graphics.getHeight()/2 - splash.getHeight() /2);
 
         Tween.set(splash, SpriteAccessor.ALPHA).target(0).start(tweenManager);
-        Tween.to(splash, SpriteAccessor.ALPHA, 2).target(1).repeatYoyo(1, 1.5f).setCallback(new TweenCallback() {
+        Tween.to(splash, SpriteAccessor.ALPHA, 2).target(1).repeatYoyo(1, 15f).setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 game.setScreen(new MenuScreen(game));
@@ -71,14 +75,14 @@ public class SplashScreen implements Screen{
 
         game.batch.begin();
 
-        splash.draw(game.batch);
+        //splash.draw(game.batch);
+        game.batch.draw(splash, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         game.batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        splash.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
 
     @Override

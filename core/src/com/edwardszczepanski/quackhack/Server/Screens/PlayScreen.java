@@ -81,7 +81,7 @@ public class PlayScreen implements Screen, NetListener {
             gamecam.position.x -= 10 / QuackHack.PPM;
         }
         */
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y == 0){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.currentState != Player.State.JUMPING && player.currentState != Player.State.FALLING){
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2) {
