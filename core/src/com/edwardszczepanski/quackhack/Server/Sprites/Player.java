@@ -29,6 +29,7 @@ public class Player extends Sprite{
     private Animation marioJump;
     private float stateTimer;
     private boolean runningRight;
+    private boolean isGoing;
 
 
     public Player (World world, PlayScreen screen){
@@ -39,6 +40,7 @@ public class Player extends Sprite{
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        isGoing = false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i = 1; i < 4; ++i){
@@ -141,8 +143,14 @@ public class Player extends Sprite{
         fdef.shape = head;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("foot");
-
-
-
+    }
+    
+    
+    public void isGoing(boolean b) {
+    	isGoing = b;
+    }
+    
+    public boolean isGoing() {
+    	return isGoing;
     }
 }

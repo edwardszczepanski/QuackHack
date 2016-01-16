@@ -1,9 +1,13 @@
 package com.edwardszczepanski.quackhack.Net;
 
 public interface NetListener {
-	public void netJump();
+	public void netPing(Integer id);
 
-	public void netPing();
+	public void netPlayerConnected(Integer id);
+	public void netPlayerDisconnected(Integer id);
+	
+	public void netJump(Integer id);
+	public void netMoveRight(Integer id);
 
-	public void netMoveRight();
+	public void netEndMove(Integer id);
 }

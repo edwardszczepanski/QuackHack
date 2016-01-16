@@ -74,9 +74,17 @@ public class MenuScreen implements Screen {
         textButtonStyle.font = black;
 
         buttonExit = new TextButton("EXIT", textButtonStyle);
-        buttonExit.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-            	game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
+        buttonExit.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("lol");
+                game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
+				return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("lol");
+                game.getClient().sendCommand(NetCommand.END_MOVE);
             }
         });
 

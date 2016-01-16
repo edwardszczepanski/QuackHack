@@ -9,6 +9,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 public class NetClient {
 	private Client client = new Client();
+	private Integer id = -1;
 
 	public NetClient() {
 		Kryo kryo = this.client.getKryo();
@@ -28,18 +29,21 @@ public class NetClient {
 			public void received (Connection connection, Object object) {
 				if (object instanceof Update) {
 					Update response = (Update)object;
+					id = response.id;
 					System.out.println(response.cmd);
 				}
 			}
 		});
 		
 		Update response = new Update();
-		response.cmd = NetCommand.PING;
+		response.id = id;
+		response.cmd = NetCommand.PLAYER_CONNECTED;
 		client.sendTCP(response);
 	}
 
 	public void sendCommand(NetCommand cmd) {
 		Update request = new Update();
+		request.id = id;
 		request.cmd = cmd;
 		client.sendTCP(request);
 	}
