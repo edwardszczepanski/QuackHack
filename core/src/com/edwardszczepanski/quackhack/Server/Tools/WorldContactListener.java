@@ -26,6 +26,12 @@ public class WorldContactListener implements ContactListener {
                 ((InteractiveTileObject) object.getUserData()).onHeadHit();
             }
         }
+        if (fixA.getUserData() == "foot" || fixB.getUserData() == "foot") {
+            Fixture head = fixA.getUserData() == "foot" ? fixA : fixB;
+            Fixture object = head == fixA ? fixB : fixA;
+
+            System.out.println("Ground Collision.");
+        }
     }
 
     @Override

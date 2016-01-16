@@ -134,7 +134,15 @@ public class Player extends Sprite{
         head.set(new Vector2(-2 / QuackHack. PPM, 6 / QuackHack.PPM), new Vector2(2 / QuackHack. PPM, 6 / QuackHack.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
-
         b2body.createFixture(fdef).setUserData("head");
+
+        EdgeShape foot = new EdgeShape();
+        head.set(new Vector2(-2 / QuackHack. PPM, 0 / QuackHack.PPM), new Vector2(2 / QuackHack. PPM, 0 / QuackHack.PPM));
+        fdef.shape = head;
+        fdef.isSensor = true;
+        b2body.createFixture(fdef).setUserData("foot");
+
+
+
     }
 }
