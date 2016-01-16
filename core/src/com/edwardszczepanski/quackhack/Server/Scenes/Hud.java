@@ -1,9 +1,11 @@
 package com.edwardszczepanski.quackhack.Server.Scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,12 +27,13 @@ public class Hud implements Disposable {
     private static Integer score;
     // Now we create our widgets. Our widgets will be labels, essentially text, that allow us to display Game Information
 
-    Label countdownLabel;
+    private Label countdownLabel;
     static Label scoreLabel;
-    Label timeLabel;
-    Label levelLabel;
-    Label worldLabel;
-    Label marioLabel;
+    private Label timeLabel;
+    private Label levelLabel;
+    private Label worldLabel;
+    private Label marioLabel;
+    private BitmapFont font12;
 
     public Hud(SpriteBatch sb){
         worldTimer = 300;
@@ -44,12 +47,17 @@ public class Hud implements Disposable {
         table.top();
         table.setFillParent(true);
 
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 12;
+        BitmapFont font12 = generator.generateFont(parameter);
+
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font12, Color.WHITE));
+        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(font12, Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(font12, Color.WHITE));
+        levelLabel = new Label("1-1", new Label.LabelStyle(font12, Color.WHITE));
+        worldLabel = new Label("WORLD", new Label.LabelStyle(font12, Color.WHITE));
+        marioLabel = new Label("MARIO", new Label.LabelStyle(font12, Color.WHITE));
 
         table.add(marioLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);

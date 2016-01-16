@@ -15,9 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player;
@@ -59,12 +57,11 @@ public class PlayScreen implements Screen {
         map = maploader.load("TiledMap/tiledTest.tmx");
 
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 12;
-        BitmapFont font12 = generator.generateFont(parameter);
+
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM / 8);
+        map = maploader.load("level1.tmx");
+
         gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();

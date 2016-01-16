@@ -18,6 +18,7 @@ public class QuackHack extends Game {
 	public static final float V_WIDTH = 960;
 	public static final float V_HEIGHT = 540;
 
+
 	public static final short DEFAULT_BIT = 1;
 	public static final short MARIO_BIT = 2;
 	public static final short BRICK_BIT = 4;
@@ -31,20 +32,19 @@ public class QuackHack extends Game {
     private QuackHack game;
 	
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		
+	public void create () {		
 		// Net Shit
 		System.out.println("Good morning!");
+        game = this;
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			// Run server
 			server = new NetServer();
+			batch = new SpriteBatch();
+			setScreen(new MenuScreen(game));
 		} else {
 			// Run client
 			client = new NetClient();
 		}
-        game = this;
-		setScreen(new MenuScreen(game));
 	}
 
 	@Override
