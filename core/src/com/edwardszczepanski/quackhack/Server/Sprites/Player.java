@@ -30,6 +30,7 @@ public class Player extends Sprite{
     private float stateTimer;
     private boolean runningRight;
     private boolean touchingGround;
+    private boolean isGoing;
 
 
     public Player (World world, PlayScreen screen){
@@ -41,6 +42,8 @@ public class Player extends Sprite{
         stateTimer = 0;
         runningRight = true;
         touchingGround = true;
+        isGoing = false;
+
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i = 1; i < 4; ++i){
@@ -142,6 +145,7 @@ public class Player extends Sprite{
         foot.set(new Vector2(-128 / QuackHack. PPM, -135 / QuackHack.PPM), new Vector2(128 / QuackHack. PPM, -135 / QuackHack.PPM));
         fdef.shape = foot;
         fdef.isSensor = true;
+
         b2body.createFixture(fdef).setUserData(this);
     }
 
@@ -151,5 +155,14 @@ public class Player extends Sprite{
 
     public boolean getTouching(){
         return touchingGround;
+    }
+    
+    
+    public void isGoing(boolean b) {
+    	isGoing = b;
+    }
+    
+    public boolean isGoing() {
+    	return isGoing;
     }
 }

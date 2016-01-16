@@ -5,7 +5,3 @@ sourceSets.main.java.srcDirs = ["src/"]
 eclipse.project {
     name = appName + "-core"
 }
-dependencies {
-    compile files('build/libs/tween-engine-api.jar')
-    compile files('build/libs/tween-engine-api-sources.jar')
-}
