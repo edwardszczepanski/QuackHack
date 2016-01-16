@@ -15,8 +15,8 @@ import com.edwardszczepanski.quackhack.Server.Screens.MenuScreen;
 
 public class QuackHack extends Game {
 	public static final float PPM = 100;
-	public static final float V_WIDTH = 640;
-	public static final float V_HEIGHT = 480;
+	public static final float V_WIDTH = 320;
+	public static final float V_HEIGHT = 240;
 
 	public static final short DEFAULT_BIT = 1;
 	public static final short MARIO_BIT = 2;
@@ -31,20 +31,19 @@ public class QuackHack extends Game {
     private QuackHack game;
 	
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		
+	public void create () {		
 		// Net Shit
 		System.out.println("Good morning!");
+        game = this;
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			// Run server
 			server = new NetServer();
+			batch = new SpriteBatch();
+			setScreen(new MenuScreen(game));
 		} else {
 			// Run client
 			client = new NetClient();
 		}
-        game = this;
-		setScreen(new MenuScreen(game));
 	}
 
 	@Override

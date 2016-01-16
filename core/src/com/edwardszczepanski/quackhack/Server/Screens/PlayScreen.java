@@ -12,7 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
@@ -29,7 +29,7 @@ public class PlayScreen implements Screen {
     private TextureAtlas atlas;
 
     private OrthographicCamera gamecam;
-    private Viewport gamePort;
+    private ExtendViewport gamePort;
     private Hud hud;
 
     // Sprites
@@ -48,12 +48,12 @@ public class PlayScreen implements Screen {
         atlas = new TextureAtlas("mario_and_enemies.pack");
         this.game = game;
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(QuackHack.V_WIDTH / QuackHack.PPM, QuackHack.V_HEIGHT / QuackHack.PPM, gamecam);
+        gamePort = new ExtendViewport(QuackHack.V_WIDTH / QuackHack.PPM, QuackHack.V_HEIGHT / QuackHack.PPM, gamecam);
         hud = new Hud(game.batch);
         maploader = new TmxMapLoader();
         map = maploader.load("level1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
-        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map);
