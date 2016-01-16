@@ -10,8 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
 
 /**
@@ -20,7 +19,7 @@ import com.edwardszczepanski.quackhack.QuackHack;
 
 public class Hud implements Disposable {
     public Stage stage;
-    private Viewport viewport;
+    private ExtendViewport viewport;
 
     private Integer worldTimer;
     private float timeCount;
@@ -32,7 +31,7 @@ public class Hud implements Disposable {
     private Label timeLabel;
     private Label levelLabel;
     private Label worldLabel;
-    private Label marioLabel;
+    private Label nameLabel;
     private BitmapFont font12;
 
     public Hud(SpriteBatch sb){
@@ -40,7 +39,7 @@ public class Hud implements Disposable {
         timeCount = 0;
         score = 0;
 
-        viewport = new FitViewport(QuackHack.V_WIDTH, QuackHack.V_HEIGHT, new OrthographicCamera());
+        viewport = new ExtendViewport(QuackHack.V_WIDTH, QuackHack.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         Table table = new Table();
@@ -49,7 +48,7 @@ public class Hud implements Disposable {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 12;
+        parameter.size = 36;
         BitmapFont font12 = generator.generateFont(parameter);
 
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font12, Color.WHITE));
@@ -57,9 +56,9 @@ public class Hud implements Disposable {
         timeLabel = new Label("TIME", new Label.LabelStyle(font12, Color.WHITE));
         levelLabel = new Label("1-1", new Label.LabelStyle(font12, Color.WHITE));
         worldLabel = new Label("WORLD", new Label.LabelStyle(font12, Color.WHITE));
-        marioLabel = new Label("MARIO", new Label.LabelStyle(font12, Color.WHITE));
+        nameLabel = new Label("InfernoDucks", new Label.LabelStyle(font12, Color.WHITE));
 
-        table.add(marioLabel).expandX().padTop(10);
+        table.add(nameLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
 

@@ -115,7 +115,7 @@ public class Player extends Sprite{
 
     public void defineMario(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / QuackHack.PPM, 32 / QuackHack.PPM); // Mario start position
+        bdef.position.set(32 / QuackHack.PPM, 150 / QuackHack.PPM); // Mario start position
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

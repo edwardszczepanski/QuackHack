@@ -56,14 +56,11 @@ public class PlayScreen implements Screen {
         maploader = new TmxMapLoader();
         map = maploader.load("TiledMap/tiledTest.tmx");
 
-
-
-
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM / 8);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
         map = maploader.load("level1.tmx");
 
         gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
-        world = new World(new Vector2(0, -10), true);
+        world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map);
         player = new Player(world, this);
