@@ -39,7 +39,7 @@ public class Hud implements Disposable {
         timeCount = 0;
         score = 0;
 
-        viewport = new ExtendViewport(QuackHack.V_WIDTH, QuackHack.V_HEIGHT, new OrthographicCamera());
+        viewport = new ExtendViewport(960, 640, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         Table table = new Table();

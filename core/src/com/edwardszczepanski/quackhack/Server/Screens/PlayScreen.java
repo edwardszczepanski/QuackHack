@@ -51,13 +51,12 @@ public class PlayScreen implements Screen {
         atlas = new TextureAtlas("mario_and_enemies.pack");
         this.game = game;
         gamecam = new OrthographicCamera();
-        gamePort = new ExtendViewport(QuackHack.V_WIDTH * 2.5f / QuackHack.PPM, QuackHack.V_HEIGHT * 2.5f / QuackHack.PPM, gamecam);
+        gamePort = new ExtendViewport(QuackHack.V_WIDTH * 4 / QuackHack.PPM, QuackHack.V_HEIGHT * 4 / QuackHack.PPM, gamecam);
         hud = new Hud(game.batch);
         maploader = new TmxMapLoader();
-        //map = maploader.load("TiledMap/tiledTest.tmx");
-        map = maploader.load("level1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
 
+        map = maploader.load("level2.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
 
         gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -10), true);
