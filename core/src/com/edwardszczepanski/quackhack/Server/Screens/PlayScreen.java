@@ -54,10 +54,9 @@ public class PlayScreen implements Screen {
         gamePort = new ExtendViewport(QuackHack.V_WIDTH / QuackHack.PPM, QuackHack.V_HEIGHT / QuackHack.PPM, gamecam);
         hud = new Hud(game.batch);
         maploader = new TmxMapLoader();
-        map = maploader.load("TiledMap/tiledTest.tmx");
+        map = maploader.load("level2.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
-        map = maploader.load("level1.tmx");
 
         gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
         world = new World(new Vector2(0, 0), true);

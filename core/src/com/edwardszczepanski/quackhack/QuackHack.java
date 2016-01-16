@@ -15,8 +15,8 @@ import com.edwardszczepanski.quackhack.Server.Screens.MenuScreen;
 
 public class QuackHack extends Game {
 	public static final float PPM = 100;
-	public static final float V_WIDTH = 960;
-	public static final float V_HEIGHT = 540;
+	public static final float V_WIDTH = 960*4;
+	public static final float V_HEIGHT = 640*4;
 
 
 	public static final short DEFAULT_BIT = 1;

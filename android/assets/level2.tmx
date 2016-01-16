@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="128" tileheight="128" nextobjectid="14">
+ <tileset firstgid="1" name="spritesheet_ground" tilewidth="128" tileheight="128" tilecount="128" columns="8">
+  <image source="spritesheet_ground.png" width="1024" height="2048"/>
+ </tileset>
+ <layer name="Graphics Layer" width="100" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt0iEKgEAQhtHF5hGMRqPRIxi9/2Ucmxh0QGRR34Mv78C/pQAAAAAAAE+ZovHQUPUieKcuahP1tQ78kW2LOWoSLcUmVzL/+qzsFvtN7r755VbZbAZX
+  </data>
+ </layer>
+ <objectgroup name="Ground" offsetx="0" offsety="-3.34784">
+  <object id="4" x="3.34784" y="2435.01" width="12818" height="126.087"/>
+  <object id="9" x="2046.58" y="2442.94">
+   <polygon points="0,0 262.009,-264.92 1411.94,-262.009 1665.21,-5.82242"/>
+  </object>
+  <object id="13" x="767.598" y="1922" width="767.598" height="72.614"/>
+ </objectgroup>
+</map>
