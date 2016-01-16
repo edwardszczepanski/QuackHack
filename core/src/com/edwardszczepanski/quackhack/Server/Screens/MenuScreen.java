@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.edwardszczepanski.quackhack.QuackHack;
@@ -25,7 +26,7 @@ import com.edwardszczepanski.quackhack.QuackHack;
  */
 public class MenuScreen implements Screen {
     private OrthographicCamera gamecam;
-    private Viewport gamePort;
+    private ExtendViewport gamePort;
 
     private QuackHack game;
     private Stage stage;
@@ -51,7 +52,7 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), gamecam);
+        gamePort = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), gamecam);
 
         stage = new Stage(gamePort, game.batch);
         Gdx.input.setInputProcessor(stage);

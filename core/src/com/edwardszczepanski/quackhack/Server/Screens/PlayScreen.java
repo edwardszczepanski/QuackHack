@@ -5,14 +5,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
@@ -29,11 +33,12 @@ public class PlayScreen implements Screen {
     private TextureAtlas atlas;
 
     private OrthographicCamera gamecam;
-    private Viewport gamePort;
+    private ExtendViewport gamePort;
     private Hud hud;
 
     // Sprites
     private Player player;
+    private BitmapFont font12;
 
     // Tiled Map Variables
     private TmxMapLoader maploader;
@@ -48,12 +53,19 @@ public class PlayScreen implements Screen {
         atlas = new TextureAtlas("mario_and_enemies.pack");
         this.game = game;
         gamecam = new OrthographicCamera();
-        gamePort = new FitViewport(QuackHack.V_WIDTH / QuackHack.PPM, QuackHack.V_HEIGHT / QuackHack.PPM, gamecam);
+        gamePort = new ExtendViewport(QuackHack.V_WIDTH / QuackHack.PPM, QuackHack.V_HEIGHT / QuackHack.PPM, gamecam);
         hud = new Hud(game.batch);
         maploader = new TmxMapLoader();
-        map = maploader.load("/TiledMap/tiledTest.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
-        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        map = maploader.load("TiledMap/tiledTest.tmx");
+
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 12;
+        BitmapFont font12 = generator.generateFont(parameter);
+
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM / 8);
+        gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
         new B2WorldCreator(world, map);
@@ -62,7 +74,19 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float delta) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y == 0) {
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            gamecam.position.y += 10 / QuackHack.PPM;
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            gamecam.position.y -= 10 / QuackHack.PPM;
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            gamecam.position.x += 10 / QuackHack.PPM;
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            gamecam.position.x -= 10 / QuackHack.PPM;
+        }
+        /*if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y == 0) {
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2) {
@@ -71,6 +95,7 @@ public class PlayScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2) {
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
         }
+        */
     }
 
     public void update(float delta) {
@@ -78,7 +103,7 @@ public class PlayScreen implements Screen {
         player.update(delta);
         hud.update(delta);
         world.step(1 / 60f, 6, 2);
-        gamecam.position.x = player.b2body.getPosition().x;
+        //gamecam.position.x = player.b2body.getPosition().x;
         gamecam.update();
         renderer.setView(gamecam);
     }

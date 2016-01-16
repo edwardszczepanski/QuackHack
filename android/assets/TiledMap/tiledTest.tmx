@@ -3,22 +3,22 @@
  <tileset firstgid="1" name="Ground" tilewidth="128" tileheight="128" tilecount="128">
   <image source="spritesheet_ground.png" width="1024" height="2048"/>
  </tileset>
+ <layer name="Background" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6Ej+w/dIfpVcNVUVVVVVdXXA4snC7k=
+  </data>
+ </layer>
  <layer name="Tile Layer 1" width="100" height="15">
   <data encoding="base64" compression="zlib">
    eJzt1TsKwCAQhGGxyxE8Uu5/oZguGyYI8bGw/h9MoZU6LKYEAAAAYKZSc3QE49xdnDXZ+yAwXTz7oJv1VBf5Y4253l2o+WjtR9Xzj/6Nem81IyrRte6/Orvzfn96sS5CZQQI
   </data>
  </layer>
- <layer name="Tile Layer 2" width="100" height="15">
+ <layer name="Tile Layer 3" width="100" height="15" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwTEBAAAAwqD1T20IX6AAAAAAAIDXABdwAAE=
   </data>
  </layer>
- <layer name="Tile Layer 3" width="100" height="15">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20IX6AAAAAAAIDXABdwAAE=
-  </data>
- </layer>
- <layer name="Tile Layer 4" width="100" height="15">
+ <layer name="Tile Layer 4" width="100" height="15" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwTEBAAAAwqD1T20IX6AAAAAAAIDXABdwAAE=
   </data>
