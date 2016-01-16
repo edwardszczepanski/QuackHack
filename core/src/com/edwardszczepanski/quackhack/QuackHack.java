@@ -1,13 +1,11 @@
 package com.edwardszczepanski.quackhack;
 
-import Net.NetClient;
-import Net.NetServer;
-
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.edwardszczepanski.quackhack.Server.Screens.MenuScreen;
+import com.edwardszczepanski.quackhack.Net.NetClient;
+import com.edwardszczepanski.quackhack.Net.NetServer;
 import com.edwardszczepanski.quackhack.Server.Screens.SplashScreen;
 
 /**
@@ -38,19 +36,28 @@ public class QuackHack extends Game {
 		// Net Shit
 		System.out.println("Good morning!");
         game = this;
+		batch = new SpriteBatch();
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			// Run server
 			server = new NetServer();
-			batch = new SpriteBatch();
 			setScreen(new SplashScreen(game));
 		} else {
 			// Run client
 			client = new NetClient();
+			setScreen(new com.edwardszczepanski.quackhack.Client.Screens.MenuScreen(game));
 		}
 	}
 
 	@Override
 	public void render () {
 		super.render();
+	}
+	
+	public NetClient getClient() {
+		return client;
+	}
+
+	public NetServer getServer() {
+		return server;
 	}
 }

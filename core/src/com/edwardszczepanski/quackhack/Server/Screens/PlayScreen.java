@@ -15,8 +15,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-
 import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player;
 import com.edwardszczepanski.quackhack.Server.Tools.B2WorldCreator;
@@ -26,7 +26,7 @@ import com.edwardszczepanski.quackhack.Server.Tools.WorldContactListener;
  * Created by edwardszc on 1/15/16.
  */
 
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen, NetListener {
     private QuackHack game;
     private TextureAtlas atlas;
 
@@ -64,6 +64,7 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world, map);
         player = new Player(world, this);
         world.setContactListener(new WorldContactListener());
+        game.getServer().registerNetListener(this);
     }
 
     public void handleInput(float delta) {
@@ -157,4 +158,20 @@ public class PlayScreen implements Screen {
     public void hide() {
 
     }
+
+	@Override
+	public void netJump() {
+		player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
+	}
+
+	@Override
+	public void netPing() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void netMoveRight() {
+		player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+	}
 }

@@ -1,4 +1,4 @@
-package Net;
+package com.edwardszczepanski.quackhack.Net;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ public class NetClient {
 	public NetClient() {
 		Kryo kryo = this.client.getKryo();
 		kryo.register(Update.class);
+		kryo.register(NetCommand.class);
 		
 		client.start();
 		
@@ -33,7 +34,13 @@ public class NetClient {
 		});
 		
 		Update response = new Update();
-		response.cmd = 1;
+		response.cmd = NetCommand.PING;
 		client.sendTCP(response);
+	}
+
+	public void sendCommand(NetCommand cmd) {
+		Update request = new Update();
+		request.cmd = cmd;
+		client.sendTCP(request);
 	}
 }
