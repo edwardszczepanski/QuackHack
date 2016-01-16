@@ -5,6 +5,3 @@ sourceSets.main.java.srcDirs = ["src/"]
 eclipse.project {
     name = appName + "-core"
 }
-dependencies {
-    compile files('/Users/edwardszc/Google Drive/LibGDX/QuackHack/android/libs/kryonet-2.21-all.jar')
-}
