@@ -77,12 +77,7 @@ public class PlayScreen implements Screen, NetListener {
 		for(Player player: players.values()) {
 			player.update(delta);
 			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 8) {
-				//player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
 				player.b2body.applyLinearImpulse(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
-			}
-			if(player.isClimbing()) {
-				player.b2body.applyLinearImpulse(new Vector2(0, 8f), player.b2body.getWorldCenter(), true);
-				//player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, 8);
 			}
 		}
 		hud.update(delta);
@@ -112,6 +107,7 @@ public class PlayScreen implements Screen, NetListener {
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
 		for(Player player: players.values()) {
+            System.out.println(player.getTouching());
 			player.draw(game.batch);
 		}
 		game.batch.end();

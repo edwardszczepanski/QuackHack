@@ -20,7 +20,7 @@ public class NetClient {
 
 		while(!client.isConnected()) {
 			try {
-				client.connect(5000, "10.111.250.117", 54555, 54777);
+				client.connect(5000, "10.111.111.60", 54555, 54777);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

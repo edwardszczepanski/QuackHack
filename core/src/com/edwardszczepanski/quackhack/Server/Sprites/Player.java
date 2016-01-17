@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
-import com.edwardszczepanski.quackhack.Server.Tools.UserData;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -26,13 +25,8 @@ public class Player extends Sprite{
     public World world;
     public Body b2body;
     private TextureRegion marioStand;
-    private Animation marioRun;
-    private Animation marioJump;
-    private float stateTimer;
-    private boolean runningRight;
     private boolean touchingGround;
     private boolean isGoing;
-    private boolean isClimbing;
 
 
     public Player (World world, PlayScreen screen){
@@ -41,25 +35,8 @@ public class Player extends Sprite{
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
-        stateTimer = 0;
-        runningRight = true;
-        touchingGround = true;
+        touchingGround = false;
         isGoing = false;
-
-
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 1; i < 4; ++i){
-            frames.add(new TextureRegion(getTexture(), 1 + i * 16, 0 + 11, 16, 16));
-        }
-        marioRun = new Animation(0.1f, frames);
-        frames.clear();
-
-        for(int i = 4; i < 6; ++i){
-            frames.add(new TextureRegion(getTexture(), 1 + i * 16, 0 + 11, 16, 16));
-        }
-        marioJump = new Animation(0.1f, frames);
-        frames.clear();
-
 
         defineMario();
         marioStand = new TextureRegion(getTexture(), 1, 11, 16, 16);
@@ -70,54 +47,6 @@ public class Player extends Sprite{
 
     public void update(float delta){
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
-        setRegion(getFrame(delta));
-    }
-
-    public TextureRegion getFrame(float dt){
-        currentState = getState();
-
-        TextureRegion region;
-        switch(currentState){
-            case JUMPING:
-                region = marioJump.getKeyFrame(stateTimer);
-                break;
-            case RUNNING:
-                region = marioRun.getKeyFrame(stateTimer, true);
-                break;
-            case FALLING:
-            case STANDING:
-            default:
-                region = marioStand;
-        }
-
-        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
-            region.flip(true, false);
-            runningRight = false;
-        }
-
-        else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
-            region.flip(true, false);
-            runningRight = true;
-        }
-        stateTimer = currentState == previousState ? stateTimer + dt : 0; // Weird syntax here
-        previousState = currentState;
-        return region;
-
-    }
-
-    public State getState(){
-        if (b2body.getLinearVelocity().y > 0 || b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING){
-            return State.JUMPING;
-        }
-        else if (b2body.getLinearVelocity().y < 0){
-            return State.FALLING;
-        }
-        else if (b2body.getLinearVelocity().x != 0){
-            return State.RUNNING;
-        }
-        else {
-            return State.STANDING;
-        }
     }
 
     public void defineMario(){
@@ -136,29 +65,7 @@ public class Player extends Sprite{
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
-
-        // This is generating a head sensor
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-30 / QuackHack. PPM, 64 / QuackHack.PPM), new Vector2(30 / QuackHack. PPM, 64 / QuackHack.PPM));
-        fdef.shape = head;
-        fdef.isSensor = true;
-        b2body.createFixture(fdef).setUserData("head");
-
-        EdgeShape foot = new EdgeShape();
-        foot.set(new Vector2(-30 / QuackHack. PPM, -64 / QuackHack.PPM), new Vector2(30 / QuackHack. PPM, -64 / QuackHack.PPM));
-        fdef.shape = foot;
-        fdef.isSensor = true;
-        
-        b2body.createFixture(fdef).setUserData(new UserData(this, "foot"));
-
-        
-        EdgeShape right = new EdgeShape();
-        right.set(new Vector2(64 / QuackHack. PPM, -50 / QuackHack.PPM), new Vector2(64 / QuackHack. PPM, 30 / QuackHack.PPM));
-        fdef.shape = right;
-        fdef.isSensor = true;
-        
-        b2body.createFixture(fdef).setUserData(new UserData(this, "right"));
-
+        b2body.createFixture(fdef).setUserData(this);
     }
 
     public void setTouching(boolean input){
@@ -178,10 +85,4 @@ public class Player extends Sprite{
     	return isGoing;
     }
 
-	public void setClimbing(boolean b) {
-		isClimbing = b;
-	}
-	public boolean isClimbing() {
-		return isClimbing;
-	}
 }
