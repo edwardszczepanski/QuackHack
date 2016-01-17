@@ -66,6 +66,11 @@ public class PlayScreen implements Screen, NetListener {
 		new B2WorldCreator(world, map);
 		world.setContactListener(new WorldContactListener());
 		game.getServer().registerNetListener(this);
+		
+		for(Integer id: game.getServer().getPlayers()) {
+			System.out.println(id);
+			players.put(id, new Player(world, this));
+		}
 	}
 
 	public void update(float delta) {

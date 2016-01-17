@@ -15,13 +15,15 @@ public class NetClient {
 		Kryo kryo = this.client.getKryo();
 		kryo.register(Update.class);
 		kryo.register(NetCommand.class);
-		
+
 		client.start();
-		
-		try {
-			client.connect(5000, "10.111.250.117", 54555, 54777);
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		while(!client.isConnected()) {
+			try {
+				client.connect(5000, "10.111.250.117", 54555, 54777);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		// Receive Commands
@@ -34,7 +36,7 @@ public class NetClient {
 				}
 			}
 		});
-		
+
 		Update response = new Update();
 		response.id = id;
 		response.cmd = NetCommand.PLAYER_CONNECTED;
@@ -42,6 +44,14 @@ public class NetClient {
 	}
 
 	public void sendCommand(NetCommand cmd) {
+		while(!client.isConnected()) {
+			try {
+				client.connect(5000, "10.111.250.117", 54555, 54777);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		Update request = new Update();
 		request.id = id;
 		request.cmd = cmd;

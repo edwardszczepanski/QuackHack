@@ -10,21 +10,22 @@ import com.esotericsoftware.kryonet.Server;
 
 public class NetServer {
 	private Server server = new Server();
+	private Array<Integer> players = new Array<Integer>();
 	private Array<NetListener> listeners = new Array<NetListener>();
 
 	public NetServer() {
 		Kryo kryo = server.getKryo();
 		kryo.register(Update.class);
 		kryo.register(NetCommand.class);
-		
+
 		server.start();
-		
+
 		try {
 			server.bind(54555, 54777);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Receive Commands
 		server.addListener(new Listener() {
 			public void received (Connection connection, Object object) {
@@ -34,34 +35,49 @@ public class NetServer {
 						request.id = server.getConnections().length - 1;
 						System.out.println("New Connection! id: "+request.id);
 					}
-										
-					for(NetListener listener: listeners) {
-						switch(request.cmd) {
-						case PLAYER_CONNECTED:
-							listener.netPlayerConnected(request.id);
-							break;
-						case PLAYER_DISCONNECTED:
-							listener.netPlayerDisconnected(request.id);
-							break;
-							
-						case JUMP:
-							listener.netJump(request.id);
-							break;
-						case MOVE_RIGHT:
-							listener.netMoveRight(request.id);
-							break;
-							
-						case END_MOVE:
-							listener.netEndMove(request.id);
-							break;
-							
-						case PING:
-						default:
-							listener.netPing(request.id);
-							break;
-						}
-					}
 
+					switch(request.cmd) {
+					case PLAYER_CONNECTED:
+						players.add(request.id);
+						System.out.println("players: "+players.size);
+
+						for(NetListener listener: listeners) {
+							listener.netPlayerConnected(request.id);
+						}
+						break;
+					case PLAYER_DISCONNECTED:
+						players.removeIndex(players.indexOf(request.id, true));
+
+						for(NetListener listener: listeners) {
+							listener.netPlayerDisconnected(request.id);
+						}
+						break;
+
+					case JUMP:
+						for(NetListener listener: listeners) {
+							listener.netJump(request.id);
+						}
+						break;
+					case MOVE_RIGHT:
+						for(NetListener listener: listeners) {
+							listener.netMoveRight(request.id);
+						}
+						break;
+
+					case END_MOVE:
+						for(NetListener listener: listeners) {
+							listener.netEndMove(request.id);
+						}
+						break;
+
+					case PING:
+					default:
+						for(NetListener listener: listeners) {
+							listener.netPing(request.id);
+						}
+						break;
+					}
+					
 					Update response = new Update();
 					response.id = request.id;
 					response.cmd = NetCommand.PING;
@@ -73,5 +89,9 @@ public class NetServer {
 
 	public void registerNetListener(NetListener listener) {
 		listeners.add(listener);
+	}
+
+	public Array<Integer> getPlayers() {
+		return players;
 	}
 }
