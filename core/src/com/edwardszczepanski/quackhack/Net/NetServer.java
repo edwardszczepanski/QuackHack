@@ -35,6 +35,8 @@ public class NetServer {
 						request.id = server.getConnections().length - 1;
 						System.out.println("New Connection! id: "+request.id);
 					}
+					
+					System.out.println("command :: id: "+request.id + " cmd: "+ request.cmd.toString());
 
 					switch(request.cmd) {
 					case PLAYER_CONNECTED:
@@ -77,11 +79,6 @@ public class NetServer {
 						}
 						break;
 					}
-					
-					Update response = new Update();
-					response.id = request.id;
-					response.cmd = NetCommand.PING;
-					connection.sendTCP(response);
 				}
 			}
 		});
