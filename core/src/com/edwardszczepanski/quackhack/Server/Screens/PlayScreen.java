@@ -156,10 +156,14 @@ public class PlayScreen implements Screen, NetListener {
 		}
 		
 		gamecam.zoom = newWidth/gamecam.viewportWidth;
+		
+		System.out.println(centerX);
+		
 		gamecam.position.x = centerX;
 		gamecam.update();
 		
 		float camEdge = gamecam.position.x - gamecam.viewportWidth*gamecam.zoom/2;
+		
 		Array<Integer> des = new Array<Integer>();
 		
 		for(Player player: players.values()) {

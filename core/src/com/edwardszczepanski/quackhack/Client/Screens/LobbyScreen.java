@@ -2,9 +2,7 @@ package com.edwardszczepanski.quackhack.Client.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Net.NetCommand;
 import com.edwardszczepanski.quackhack.Net.NetListener;
