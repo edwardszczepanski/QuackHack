@@ -1,8 +1,10 @@
 package com.edwardszczepanski.quackhack.Server.Tools;
 
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -32,6 +34,27 @@ public class B2WorldCreator {
 			shape.setAsBox(rect.getWidth() / 2 / QuackHack.PPM, rect.getHeight() / 2 / QuackHack.PPM);
 			fdef.shape = shape;
 			fdef.friction = 0.4f;
+			body.createFixture(fdef);
+		}
+		
+		for(MapObject object: map.getLayers().get("Ground").getObjects().getByType(PolygonMapObject.class)){
+			Polygon poly = ((PolygonMapObject) object).getPolygon();
+
+			bdef.type = BodyDef.BodyType.StaticBody;
+			bdef.position.set((poly.getX())/ QuackHack.PPM, (poly.getY())/QuackHack.PPM); // I don't follow the math
+			
+			body = world.createBody(bdef);
+			
+			float[] fls = new float[poly.getVertices().length];
+			int i = 0;
+			for(float vert: poly.getVertices()) {
+				fls[i] = vert / QuackHack.PPM;
+				i++;
+			}
+			
+			shape.set(fls);
+			fdef.friction = 0.4f;
+			fdef.shape = shape;
 			body.createFixture(fdef);
 		}
 		

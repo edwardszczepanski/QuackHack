@@ -66,7 +66,7 @@ public class PlayScreen implements Screen, NetListener {
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
 
 		gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
-		world = new World(new Vector2(0, -30), true);
+		world = new World(new Vector2(0, -40), true);
 		b2dr = new Box2DDebugRenderer();
 		new B2WorldCreator(world, map);
 		world.setContactListener(new WorldContactListener());
@@ -76,13 +76,15 @@ public class PlayScreen implements Screen, NetListener {
 
 		for(Integer id: game.getServer().getPlayers()) {
 			players.put(id, new Player(world, this));
+			isGoing = true;
+
 		}
 	}
 
     public RayHandler rayHandlerGenerator(){
         RayHandler localRay = new RayHandler(world);
         RayHandler.useDiffuseLight(true);
-        localRay.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
+        localRay.setAmbientLight(0.8f, 0.8f, 0.8f, 0.2f);
         localRay.setShadows(true);
         return localRay;
     }
@@ -90,9 +92,14 @@ public class PlayScreen implements Screen, NetListener {
 
 	public void update(float delta) {
 		for(Player player: players.values()) {
+			System.out.println(player.b2body.getLinearVelocity().x);
 			player.update(delta);
 			if(isGoing) {
-				player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
+				if(player.b2body.getLinearVelocity().x < 8){
+                    player.b2body.applyForce(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
+                } else {
+                	player.b2body.applyForce(new Vector2(-2f, 0), player.b2body.getWorldCenter(), true);
+                }
 			}
 		}
 		hud.update(delta);
@@ -178,7 +185,7 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netJump(Integer id) {
-        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 10f), players.get(id).b2body.getWorldCenter(), true);
+        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 20f), players.get(id).b2body.getWorldCenter(), true);
 	}
 
 	@Override
@@ -194,6 +201,7 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netPlayerConnected(Integer id) {
+		isGoing = true;
 		players.put(id, new Player(world, this));
 	}
 

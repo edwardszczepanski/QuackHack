@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="20" tilewidth="128" tileheight="128" nextobjectid="306">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="20" tilewidth="128" tileheight="128" nextobjectid="328">
  <tileset firstgid="1" name="Kenny" tilewidth="128" tileheight="128" tilecount="128" columns="8">
   <image source="spritesheet_ground.png" width="1024" height="2048"/>
  </tileset>
@@ -11,7 +11,7 @@
  </tileset>
  <layer name="Graphics" width="200" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt18ENgCAQBMD7WhD9F2Izxr88DBoXmUn2fyR7BFpVNRG5TIqkWUb96SwzS+w5kMtdAX3nfuxfDwEvGvkreW+yojudtx/M4qmu6jwAAAAAAAAAAJBmE5FuDsCcNTs=
+   eJzt1zEOQEAQQNGNzhGUDuEQSud3GSQkClsIsoP3kt+PZEboUkqdpMOiiDTLVV96ljeLuOdAXN4VkLfcx1h6CHjQlX8l35v80Zmddx+8xV27aucBAICSmrm29BAQ0HIb/dyQ3AjsbbdRrbkRAAAAgO+qJWWbAOHsNyE=
   </data>
  </layer>
  <objectgroup name="Ground">
@@ -25,6 +25,9 @@
   <object id="292" x="6784" y="640" width="128" height="256"/>
   <object id="293" x="10880" y="128" width="128" height="128"/>
   <object id="294" x="23424" y="128" width="384" height="128"/>
+  <object id="306" x="5760" y="1792">
+   <polygon points="0,0 768,0 384,-384"/>
+  </object>
  </objectgroup>
  <layer name="Graphics Dynamic" width="200" height="20" visible="0">
   <data encoding="base64" compression="zlib">
@@ -34,7 +37,11 @@
  <objectgroup name="Dynamic">
   <object id="296" x="3072" y="768" width="128" height="128"/>
   <object id="297" x="3072" y="640" width="128" height="128"/>
-  <object id="298" x="3072" y="512" width="128" height="128"/>
+  <object id="298" x="3072" y="512" width="128" height="128">
+   <properties>
+    <property name="type" value="crate"/>
+   </properties>
+  </object>
   <object id="299" x="4736" y="512" width="128" height="128"/>
   <object id="300" x="4864" y="512" width="128" height="128"/>
   <object id="301" x="4864" y="384" width="128" height="128"/>
@@ -42,5 +49,22 @@
   <object id="303" x="4992" y="512" width="128" height="128"/>
   <object id="304" x="4992" y="256" width="128" height="128"/>
   <object id="305" x="5490.25" y="662.669"/>
+  <object id="307" x="3584" y="896" width="128" height="128"/>
+  <object id="308" x="3584" y="1024" width="128" height="128"/>
+  <object id="309" x="3584" y="1280" width="128" height="128"/>
+  <object id="310" x="3584" y="1152" width="128" height="128"/>
+  <object id="311" x="3584" y="1408" width="128" height="128"/>
+  <object id="312" x="3584" y="1536" width="128" height="128"/>
+  <object id="313" x="3584" y="1664" width="128" height="128"/>
+  <object id="314" x="3584" y="1792" width="128" height="128"/>
+  <object id="315" x="3584" y="1920" width="128" height="128"/>
+  <object id="317" x="3584" y="2048" width="128" height="128"/>
+  <object id="318" x="3584" y="2176" width="128" height="128"/>
+  <object id="319" x="3584" y="2304" width="128" height="128"/>
+  <object id="320" x="3584" y="768" width="128" height="128"/>
+  <object id="321" x="3584" y="640" width="128" height="128"/>
+  <object id="322" x="3584" y="512" width="128" height="128"/>
+  <object id="323" x="3584" y="384" width="128" height="128"/>
+  <object id="324" x="3584" y="256" width="128" height="128"/>
  </objectgroup>
 </map>
