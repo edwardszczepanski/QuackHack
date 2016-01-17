@@ -32,6 +32,8 @@ public class PlayScreen implements Screen, NetListener {
 	private OrthographicCamera gamecam;
 	private ExtendViewport gamePort;
 	private Hud hud;
+	
+	private boolean isGoing = false;
 
 	// Sprites
 	private HashMap<Integer, Player> players = new HashMap<Integer, Player>();
@@ -74,9 +76,8 @@ public class PlayScreen implements Screen, NetListener {
 	public void update(float delta) {
 		for(Player player: players.values()) {
 			player.update(delta);
-			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 8) {
-				//player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
-				player.b2body.applyLinearImpulse(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
+			if(isGoing) {
+				player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
 			}
 		}
 		hud.update(delta);
@@ -165,6 +166,7 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netMoveRight(Integer id) {
+		isGoing = true;
 		players.get(id).isGoing(true);
 	}
 
