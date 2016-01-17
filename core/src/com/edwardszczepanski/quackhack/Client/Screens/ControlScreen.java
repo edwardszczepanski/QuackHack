@@ -1,10 +1,6 @@
 package com.edwardszczepanski.quackhack.Client.Screens;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.edwardszczepanski.quackhack.QuackHack;
@@ -25,7 +21,7 @@ public class ControlScreen implements Screen {
 
     public void handleInput(float delta){
         if(Gdx.input.justTouched()){
-            game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
+            game.getClient().sendCommand(NetCommand.JUMP);
         }
     }
 

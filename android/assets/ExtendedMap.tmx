@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="128" tileheight="128" nextobjectid="295">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="20" tilewidth="128" tileheight="128" nextobjectid="306">
  <tileset firstgid="1" name="Kenny" tilewidth="128" tileheight="128" tilecount="128" columns="8">
   <image source="spritesheet_ground.png" width="1024" height="2048"/>
  </tileset>
@@ -9,13 +9,13 @@
  <tileset firstgid="161" name="Die/Speed Bump" tilewidth="128" tileheight="128" tilecount="128" columns="8">
   <image source="spritesheet_tiles.png" width="1024" height="2048"/>
  </tileset>
- <layer name="Graphics" width="200" height="15">
+ <layer name="Graphics" width="200" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt1zEOABAQAMFrPcj/v6aWUAjFYSbZnuQINSKqpGFZZFrLrpf2crOMcw7k5a6AOeeD1+38lbw3+dHKzDsf3OLUrJp5AAAAAIBekTStAQUGNGA=
+   eJzt18ENgCAQBMD7WhD9F2Izxr88DBoXmUn2fyR7BFpVNRG5TIqkWUb96SwzS+w5kMtdAX3nfuxfDwEvGvkreW+yojudtx/M4qmu6jwAAAAAAAAAAJBmE5FuDsCcNTs=
   </data>
  </layer>
  <objectgroup name="Ground">
-  <object id="285" x="0" y="1792" width="25590.3" height="128"/>
+  <object id="285" x="0" y="2432" width="25590.3" height="128"/>
   <object id="286" x="0" y="0" width="25582.8" height="128"/>
   <object id="287" x="4736" y="640" width="768" height="128"/>
   <object id="288" x="5376" y="768" width="128" height="256"/>
@@ -25,5 +25,22 @@
   <object id="292" x="6784" y="640" width="128" height="256"/>
   <object id="293" x="10880" y="128" width="128" height="128"/>
   <object id="294" x="23424" y="128" width="384" height="128"/>
+ </objectgroup>
+ <layer name="Graphics Dynamic" width="200" height="20" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt06EVACAMQ8Hsv1G3Q6IwGPrK3QQR+QkAzFKvB0BTFX0w383HK/rgDz4OZ/oAAAAAAAAAAAAAgG0BXKQGgg==
+  </data>
+ </layer>
+ <objectgroup name="Dynamic">
+  <object id="296" x="3072" y="768" width="128" height="128"/>
+  <object id="297" x="3072" y="640" width="128" height="128"/>
+  <object id="298" x="3072" y="512" width="128" height="128"/>
+  <object id="299" x="4736" y="512" width="128" height="128"/>
+  <object id="300" x="4864" y="512" width="128" height="128"/>
+  <object id="301" x="4864" y="384" width="128" height="128"/>
+  <object id="302" x="4992" y="384" width="128" height="128"/>
+  <object id="303" x="4992" y="512" width="128" height="128"/>
+  <object id="304" x="4992" y="256" width="128" height="128"/>
+  <object id="305" x="5490.25" y="662.669"/>
  </objectgroup>
 </map>
