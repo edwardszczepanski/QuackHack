@@ -3,6 +3,7 @@ package com.edwardszczepanski.quackhack.Net;
 import java.io.IOException;
 
 import com.badlogic.gdx.utils.Array;
+import com.edwardszczepanski.quackhack.Server.Sprites.Player.PlayerType;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -10,22 +11,14 @@ import com.esotericsoftware.kryonet.Server;
 
 public class NetServer {
 	private Server server = new Server();
-	private Array<Integer> players = new Array<Integer>();
-	private Array<NetListener> listeners = new Array<NetListener>();
-	private int currentId = 0;
-	
-	private int nextId() {
-		int i = currentId;
-		currentId += 1;
-		System.out.println(currentId);
-		return currentId;
-	}
+	private Array<NetListener> listeners = new Array<NetListener>();	
 
 	public NetServer() {
 		Kryo kryo = server.getKryo();
 		kryo.register(Update.class);
 		kryo.register(NetCommand.class);
-
+		kryo.register(PlayerType.class);
+		
 		server.start();
 
 		try {
@@ -39,56 +32,44 @@ public class NetServer {
 			public void received (Connection connection, Object object) {
 				if (object instanceof Update) {
 					Update request = (Update)object;
-					if(request.id == -1) {
-						request.id = nextId();
-						System.out.println("New Connection! id: "+request.id);
-					}
+					int id = connection.getID();
 					
-					System.out.println("command :: id: "+request.id + " cmd: "+ request.cmd.toString());
+					System.out.println("command :: id: "+id + " cmd: "+ request.cmd.toString());
 
 					switch(request.cmd) {
 					case PLAYER_CONNECTED:
-						players.add(request.id);
-						System.out.println("players: "+players.size);
+						System.out.println("players: "+server.getConnections().length);
 						
 						Update response = new Update();
-						response.id = request.id;
 						response.cmd = NetCommand.PING;
 						connection.sendTCP(response);
 
 						for(NetListener listener: listeners) {
-							listener.netPlayerConnected(request.id);
+							listener.netPlayerConnected(id);
 						}
 						break;
 					case PLAYER_DISCONNECTED:
-						players.removeIndex(players.indexOf(request.id, true));
-
 						for(NetListener listener: listeners) {
-							listener.netPlayerDisconnected(request.id);
+							listener.netPlayerDisconnected(id);
+						}
+						break;
+						
+					case PLAYER_JOIN:
+						for(NetListener listener: listeners) {
+							listener.netPlayerJoin(id);
 						}
 						break;
 						
 					case JUMP:
 						for(NetListener listener: listeners) {
-							listener.netJump(request.id);
-						}
-						break;
-					case MOVE_RIGHT:
-						for(NetListener listener: listeners) {
-							listener.netMoveRight(request.id);
-						}
-						break;
-
-					case END_MOVE:
-						for(NetListener listener: listeners) {
-							listener.netEndMove(request.id);
+							listener.netJump(id);
 						}
 						break;
 
 					case PING:
 					default:
 						for(NetListener listener: listeners) {
-							listener.netPing(request.id);
+							listener.netPing(id);
 						}
 						break;
 					}
@@ -101,7 +82,18 @@ public class NetServer {
 		listeners.add(listener);
 	}
 
-	public Array<Integer> getPlayers() {
-		return players;
+	public Connection[] getPlayers() {
+		return server.getConnections();
+	}
+
+	public void sendCommand(int id, NetCommand cmd) {
+		for(Connection c : server.getConnections()) {
+			if(c.getID() == id) {
+				Update response = new Update();
+				response.cmd = cmd;
+				c.sendTCP(response);
+				break;
+			}
+		}
 	}
 }
