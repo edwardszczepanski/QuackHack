@@ -64,13 +64,12 @@ public class MenuScreen implements Screen {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.color.set(Color.BLACK);
-        parameter.size = 32;
+        parameter.size = 72;
         font = generator.generateFont(parameter);
 
-        // Creating fonts
-        white = new BitmapFont(Gdx.files.internal("font/white32.fnt"), false);
-        black = new BitmapFont(Gdx.files.internal("font/black32.fnt"), false);
+        heading = new Label("QuackHack", new Label.LabelStyle(font, Color.WHITE));
+        parameter.size = 32;
+        font = generator.generateFont(parameter);
 
         // Creating buttons
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -99,11 +98,6 @@ public class MenuScreen implements Screen {
             }
         });
         buttonPlay.pad(20);
-
-
-        // Creating heading
-
-        heading = new Label("QuackHack", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/white64.fnt"), false), Color.WHITE));
 
         // Assembling
         table.add(heading);
