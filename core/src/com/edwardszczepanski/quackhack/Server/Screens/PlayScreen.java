@@ -8,6 +8,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,6 +44,7 @@ public class PlayScreen implements Screen, NetListener {
 	private OrthographicCamera gamecam;
 	private ExtendViewport gamePort;
 	private Hud hud;
+    private Music gameMusic;
 	
 	private boolean isGoing = false;
 
@@ -74,10 +76,13 @@ public class PlayScreen implements Screen, NetListener {
 
 		map = maploader.load("Tunnelv0.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Airborn.wav"));
+        gameMusic.setLooping(true);
+        gameMusic.play();
 
 		gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
 		world = new World(new Vector2(0, -100), true);
-		b2dr = new Box2DDebugRenderer();
+		//b2dr = new Box2DDebugRenderer();
 		new B2WorldCreator(world, map, this);
 		world.setContactListener(new WorldContactListener());
 		game.getServer().registerNetListener(this);
@@ -89,8 +94,6 @@ public class PlayScreen implements Screen, NetListener {
 			players.put(c.getID(), new Player(c.getID(), world, this, game.getServer().getPlayerType(c.getID())));
 		}
 		game.getServer().sendCommand(NetCommand.PLAYER_JOIN);
-        //TextureRegion bg = new TextureRegion(new Texture(Gdx.files.internal("blue_grass.png")));
-
 
         //http://www.badlogicgames.com/forum/viewtopic.php?f=17&t=1795
         rbg = new ParallaxBackground(new ParallaxLayer[]{
@@ -173,11 +176,10 @@ public class PlayScreen implements Screen, NetListener {
 		}
 		if(players.isEmpty()) {
 			game.getServerLobbyScreen().reset();
+            gameMusic.pause();
 			game.setScreen(game.getServerLobbyScreen());
 		}
 
-		
-		
 		renderer.setView(gamecam);
         rayHandler.update();
 	}
@@ -194,7 +196,7 @@ public class PlayScreen implements Screen, NetListener {
 		renderer.render();
 
 		//renderer our Box2DDebugLines
-		b2dr.render(world, gamecam.combined);
+		//b2dr.render(world, gamecam.combined);
 
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
@@ -238,6 +240,7 @@ public class PlayScreen implements Screen, NetListener {
 		world.dispose();
 		b2dr.dispose();
 		hud.dispose();
+        gameMusic.dispose();
 	}
 
 	@Override
@@ -286,6 +289,7 @@ public class PlayScreen implements Screen, NetListener {
 	public void netPlayerDisconnected(Integer id) {}
 	
 	public void reset() {
+        gameMusic.pause();
 		game.setScreen(new PlayScreen(game));
 	}
 

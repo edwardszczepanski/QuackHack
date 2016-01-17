@@ -6,9 +6,12 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Server.Scenes.ParallaxBackground;
+import com.edwardszczepanski.quackhack.Server.Scenes.ParallaxLayer;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -38,6 +43,7 @@ public class MenuScreen implements Screen {
     private TextureAtlas atlas;
     private BitmapFont font;
     private Music menuMusic;
+    private ParallaxBackground rbg;
 
     public MenuScreen(QuackHack game){
         this.game = game;
@@ -66,14 +72,15 @@ public class MenuScreen implements Screen {
 
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("App Menu.wav"));
         menuMusic.setLooping(true);
+        menuMusic.play();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 72;
+        parameter.size = 60;
 
         font = generator.generateFont(parameter);
 
-        heading = new Label("QuackHack", new Label.LabelStyle(font, Color.WHITE));
+        heading = new Label("Game Full of Animals", new Label.LabelStyle(font, Color.WHITE));
         parameter.size = 32;
         font = generator.generateFont(parameter);
 
@@ -98,23 +105,29 @@ public class MenuScreen implements Screen {
         buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                menuMusic.pause();
                 stage.dispose();
                 Gdx.input.setInputProcessor(stage);
-                game.setScreen(new PlayScreen(game));
+                game.setScreen(new ServerLobbyScreen(game));
             }
         });
         buttonPlay.pad(20);
 
         // Assembling
-        table.add(heading);
-        table.getCell(heading).spaceBottom(100);
+        table.add(heading).padTop(135);
+        table.getCell(heading).spaceBottom(18);
         table.row();
         table.add(buttonPlay);
         table.getCell(buttonPlay).spaceBottom(15);
         table.row();
         table.add(buttonExit);
-        table.debug(); // This enables all the debug lines
+        //table.debug(); // This enables all the debug lines
         stage.addActor(table);
+
+        rbg = new ParallaxBackground(new ParallaxLayer[]{
+                new ParallaxLayer(new TextureRegion(new Texture(Gdx.files.internal("blue_grass.png"))),new Vector2(0.5f, 0.5f),new Vector2(0, 300)),
+                //new ParallaxLayer(atlas.findRegion("bg2"),new Vector2(1.0f,1.0f),new Vector2(0, 500)),
+        }, 800, 480,new Vector2(150,0));
     }
 
     @Override
@@ -122,7 +135,7 @@ public class MenuScreen implements Screen {
         update(delta);
         Gdx.gl.glClearColor(0, 0, 0, 1); // Color then opacity
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        rbg.render(delta);
         stage.act(delta);
         stage.draw();
     }
