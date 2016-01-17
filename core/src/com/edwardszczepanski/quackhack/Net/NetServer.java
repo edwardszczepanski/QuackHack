@@ -2,6 +2,7 @@ package com.edwardszczepanski.quackhack.Net;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -54,7 +55,7 @@ public class NetServer {
 							listener.netPlayerDisconnected(request.id);
 						}
 						break;
-
+						
 					case JUMP:
 						for(NetListener listener: listeners) {
 							listener.netJump(request.id);
@@ -79,6 +80,11 @@ public class NetServer {
 						}
 						break;
 					}
+					
+					Update response = new Update();
+					response.id = request.id;
+					response.cmd = NetCommand.PING;
+					connection.sendTCP(response);
 				}
 			}
 		});

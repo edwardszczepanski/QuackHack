@@ -3,11 +3,9 @@ package com.edwardszczepanski.quackhack.Server.Screens;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -79,10 +77,6 @@ public class PlayScreen implements Screen, NetListener {
 			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 8) {
 				//player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
 				player.b2body.applyLinearImpulse(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
-			}
-			if(player.isClimbing()) {
-				player.b2body.applyLinearImpulse(new Vector2(0, 8f), player.b2body.getWorldCenter(), true);
-				//player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, 8);
 			}
 		}
 		hud.update(delta);
@@ -161,9 +155,7 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netJump(Integer id) {
-        if(players.get(id).getTouching()){
-            players.get(id).b2body.applyLinearImpulse(new Vector2(0, 10f), players.get(id).b2body.getWorldCenter(), true);
-        }
+        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 10f), players.get(id).b2body.getWorldCenter(), true);
 	}
 
 	@Override
