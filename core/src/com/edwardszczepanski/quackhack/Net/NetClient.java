@@ -2,6 +2,8 @@ package com.edwardszczepanski.quackhack.Net;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -18,13 +20,27 @@ public class NetClient {
 
 		client.start();
 
-		while(!client.isConnected()) {
-			try {
-				client.connect(5000, "10.111.250.117", 54555, 54777);
-			} catch (IOException e) {
-				e.printStackTrace();
+		Timer.schedule(new Task(){
+			@Override
+			public void run() {
+				if(!client.isConnected()) {
+					System.out.println("Connecting...");
+					try {
+						client.connect(5000, "10.111.250.117", 54555, 54777);
+					} catch (IOException e) {
+						System.out.println("Failed to Connect.");
+					}
+					if(client.isConnected()) {
+						System.out.println("Connected!");
+						
+						Update response = new Update();
+						response.id = id;
+						response.cmd = NetCommand.PLAYER_CONNECTED;
+						client.sendTCP(response);
+					}
+				}
 			}
-		}
+		}, 0, 5);
 
 		// Receive Commands
 		client.addListener(new Listener() {
@@ -36,22 +52,9 @@ public class NetClient {
 				}
 			}
 		});
-
-		Update response = new Update();
-		response.id = id;
-		response.cmd = NetCommand.PLAYER_CONNECTED;
-		client.sendTCP(response);
 	}
 
 	public void sendCommand(NetCommand cmd) {
-		while(!client.isConnected()) {
-			try {
-				client.connect(5000, "10.111.250.117", 54555, 54777);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
 		Update request = new Update();
 		request.id = id;
 		request.cmd = cmd;
