@@ -14,6 +14,8 @@ import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
 import com.edwardszczepanski.quackhack.Server.Tools.Assets;
 
+import java.util.ArrayList;
+
 /**
  * Created by edwardszc on 1/15/16.
  */
@@ -31,7 +33,7 @@ public class Player extends Sprite{
         super(Assets.getAtlas().findRegion("boxCrate_double"));
 
         playerRegion = new TextureRegion(getTexture(), 0, 0, 128, 128);
-        setBounds(0,0, 128, 128);
+        setBounds(0, 0, 128 / QuackHack.PPM, 128 / QuackHack.PPM);
         setRegion(playerRegion);
         setOrigin(getHeight() / 2, getWidth() / 2);
         
@@ -41,7 +43,6 @@ public class Player extends Sprite{
 
         definePlayer();
         // Now we do the bounds for how large to render it
-        setBounds(0, 0, 16 / QuackHack.PPM, 16 / QuackHack.PPM);
         defineLights();
     }
     public void defineLights(){

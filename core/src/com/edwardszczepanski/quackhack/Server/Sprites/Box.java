@@ -36,12 +36,13 @@ public class Box extends Sprite {
         body.createFixture(fdef);
 
         boxRegion = new TextureRegion(getTexture(), 0, 0, 128, 128);
-        setBounds(0,0, 128, 128);
+        setBounds(0,0, 128 / QuackHack.PPM, 128 / QuackHack.PPM);
         setRegion(boxRegion);
         setOrigin(getHeight()/2, getWidth()/2);
     }
 
-    public void update(){
-
+    public void update() {
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getWidth() / 2);
+        setRotation(body.getAngle());
     }
 }

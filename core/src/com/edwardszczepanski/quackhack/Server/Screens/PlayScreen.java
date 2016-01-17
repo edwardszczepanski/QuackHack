@@ -1,5 +1,6 @@
 package com.edwardszczepanski.quackhack.Server.Screens;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import box2dLight.RayHandler;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
+import com.edwardszczepanski.quackhack.Server.Sprites.Box;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player;
 import com.edwardszczepanski.quackhack.Server.Tools.B2WorldCreator;
 import com.edwardszczepanski.quackhack.Server.Tools.WorldContactListener;
@@ -43,6 +45,7 @@ public class PlayScreen implements Screen, NetListener {
 	private TmxMapLoader maploader;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
+    private ArrayList<Box> boxList = new ArrayList<Box>();
 
     //Box2d Lights
     public static RayHandler rayHandler;
@@ -66,7 +69,7 @@ public class PlayScreen implements Screen, NetListener {
 		gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
 		world = new World(new Vector2(0, -40), true);
 		b2dr = new Box2DDebugRenderer();
-		new B2WorldCreator(world, map);
+		new B2WorldCreator(world, map, this);
 		world.setContactListener(new WorldContactListener());
 		game.getServer().registerNetListener(this);
 
@@ -121,6 +124,11 @@ public class PlayScreen implements Screen, NetListener {
 		if(newWidth < gamecam.viewportWidth) {
 			newWidth = gamecam.viewportWidth;
 		}
+        if(!boxList.isEmpty()){
+            for(int i = 0; i < boxList.size(); ++i) {
+                boxList.get(i).update();
+            }
+        }
 		
 		gamecam.zoom = (newWidth/gamecam.viewportWidth);
 		gamecam.position.x = centerX;
@@ -148,6 +156,12 @@ public class PlayScreen implements Screen, NetListener {
 		for(Player player: players.values()) {
 			player.draw(game.batch);
 		}
+        if(!boxList.isEmpty()){
+            for(int i = 0; i < boxList.size(); ++i) {
+                boxList.get(i).draw(game.batch);
+            }
+        }
+
 		game.batch.end();
 
         rayHandler.setCombinedMatrix(gamecam.combined.cpy().scl(1),
@@ -167,6 +181,10 @@ public class PlayScreen implements Screen, NetListener {
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
 	}
+
+    public void addBoxList(Box box){
+        boxList.add(box);
+    }
 
 	@Override
 	public void dispose() {
