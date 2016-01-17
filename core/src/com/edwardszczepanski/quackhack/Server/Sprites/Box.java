@@ -29,10 +29,11 @@ public class Box extends Sprite {
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set((rect.getX()+rect.getWidth()/2)/ QuackHack.PPM, (rect.getY() + rect.getHeight()/2)/QuackHack.PPM); // I don't follow the math
         body = world.createBody(bdef);
-
+                
         shape.setAsBox(rect.getWidth() / 2 / QuackHack.PPM, rect.getHeight() / 2 / QuackHack.PPM);
         fdef.shape = shape;
         fdef.friction = 0.4f;
+        fdef.density = 0.1f;
         body.createFixture(fdef);
 
         boxRegion = new TextureRegion(getTexture(), 0, 0, 128, 128);
@@ -43,6 +44,6 @@ public class Box extends Sprite {
 
     public void update() {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getWidth() / 2);
-        setRotation(body.getAngle());
+        setRotation((float) ((body.getAngle()/Math.PI)*180));
     }
 }

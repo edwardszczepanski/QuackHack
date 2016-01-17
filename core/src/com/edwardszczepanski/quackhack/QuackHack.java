@@ -14,7 +14,7 @@ import com.edwardszczepanski.quackhack.Server.Screens.SplashScreen;
 
 public class QuackHack extends Game {
 
-	public static final float PPM = 128;
+	public static final float PPM = 32;
 	public static final float V_WIDTH = 960;
 	public static final float V_HEIGHT = 640;
 

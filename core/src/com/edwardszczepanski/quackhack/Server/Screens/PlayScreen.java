@@ -67,7 +67,7 @@ public class PlayScreen implements Screen, NetListener {
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
 
 		gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
-		world = new World(new Vector2(0, -40), true);
+		world = new World(new Vector2(0, -100), true);
 		b2dr = new Box2DDebugRenderer();
 		new B2WorldCreator(world, map, this);
 		world.setContactListener(new WorldContactListener());
@@ -89,17 +89,6 @@ public class PlayScreen implements Screen, NetListener {
     }
 
 	public void update(float delta) {
-		for(Player player: players.values()) {
-			player.update(delta);
-			if(isGoing) {
-				if(player.b2body.getLinearVelocity().x < 8){
-                    player.b2body.applyForce(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
-                } else {
-                	player.b2body.applyForce(new Vector2(-2f, 0), player.b2body.getWorldCenter(), true);
-                }
-			}
-		}
-		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			this.reset();
 		}
@@ -111,6 +100,23 @@ public class PlayScreen implements Screen, NetListener {
 
 		world.step(1 / 60f, 6, 2);
 		
+		for(Player player: players.values()) {
+			player.update(delta);
+			if(isGoing) {
+				if(player.b2body.getLinearVelocity().x < 36){
+                    player.b2body.applyForce(new Vector2(60f, 0), player.b2body.getWorldCenter(), true);
+                } else {
+                	player.b2body.applyForce(new Vector2(-25f, 0), player.b2body.getWorldCenter(), true);
+                }
+			}
+		}
+		
+        if(!boxList.isEmpty()){
+            for(int i = 0; i < boxList.size(); ++i) {
+                boxList.get(i).update();
+            }
+        }
+        
 		float minX = 999999;
 
 		for(Player player: players.values()) {
@@ -118,19 +124,18 @@ public class PlayScreen implements Screen, NetListener {
 			minX = Math.min(minX, player.b2body.getPosition().x);
 		}
 		
-		float newWidth = (maxX-minX)*2;
-		float centerX = maxX-(newWidth/4);
+		float newWidth = (maxX-minX)*1.5f;
+		float centerX = maxX-(newWidth*0.25f);
 		
 		if(newWidth < gamecam.viewportWidth) {
 			newWidth = gamecam.viewportWidth;
 		}
-        if(!boxList.isEmpty()){
-            for(int i = 0; i < boxList.size(); ++i) {
-                boxList.get(i).update();
-            }
-        }
 		
-		gamecam.zoom = (newWidth/gamecam.viewportWidth);
+		if(newWidth > gamecam.viewportWidth * 2) {
+			newWidth = gamecam.viewportWidth * 2;
+		}
+		
+		gamecam.zoom = newWidth/gamecam.viewportWidth;
 		gamecam.position.x = centerX;
 		gamecam.update();
 		
@@ -216,7 +221,7 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netJump(Integer id) {
-        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 30f), players.get(id).b2body.getWorldCenter(), true);
+        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 150f), players.get(id).b2body.getWorldCenter(), true);
 	}
 
 	@Override

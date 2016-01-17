@@ -68,7 +68,7 @@ public class Player extends Sprite{
         fdef.filter.categoryBits = QuackHack.MARIO_BIT;
         fdef.filter.maskBits = QuackHack.DEFAULT_BIT;
         fdef.friction = 0;
-        fdef.density = 1.1f;
+        fdef.density = 0.1f;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
