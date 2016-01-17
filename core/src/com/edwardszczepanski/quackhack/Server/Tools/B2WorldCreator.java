@@ -33,7 +33,7 @@ public class B2WorldCreator {
 
 			shape.setAsBox(rect.getWidth() / 2 / QuackHack.PPM, rect.getHeight() / 2 / QuackHack.PPM);
 			fdef.shape = shape;
-			fdef.friction = 1;
+			fdef.friction = 0;
 			body.createFixture(fdef);
 		}
 		
