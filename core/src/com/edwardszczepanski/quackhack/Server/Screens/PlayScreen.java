@@ -59,7 +59,7 @@ public class PlayScreen implements Screen, NetListener {
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(QuackHack.V_WIDTH * 4 / QuackHack.PPM, QuackHack.V_HEIGHT * 4 / QuackHack.PPM, gamecam);
-		hud = new Hud(game.batch);
+		hud = new Hud(game);
 		maploader = new TmxMapLoader();
 
 		map = maploader.load("ExtendedMap.tmx");
@@ -102,7 +102,12 @@ public class PlayScreen implements Screen, NetListener {
                 }
 			}
 		}
+
 		hud.update(delta);
+        if(hud.getTime() == 0){
+            isGoing = true;
+        }
+
 		world.step(1 / 60f, 6, 2);
 		
 		for(Player player: players.values()) {
@@ -142,7 +147,9 @@ public class PlayScreen implements Screen, NetListener {
         rayHandler.render();
 
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-		hud.stage.draw();
+        if(hud.getTime() > 0){
+            hud.stage.draw();
+        }
 	}
 
 	@Override
