@@ -59,7 +59,7 @@ public class PlayScreen implements Screen, NetListener {
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(QuackHack.V_WIDTH * 4 / QuackHack.PPM, QuackHack.V_HEIGHT * 4 / QuackHack.PPM, gamecam);
-		hud = new Hud(game.batch);
+		hud = new Hud(game);
 		maploader = new TmxMapLoader();
 
 		map = maploader.load("ExtendedMap.tmx");
@@ -82,7 +82,7 @@ public class PlayScreen implements Screen, NetListener {
     public RayHandler rayHandlerGenerator(){
         RayHandler localRay = new RayHandler(world);
         RayHandler.useDiffuseLight(true);
-        localRay.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
+        localRay.setAmbientLight(0.8f, 0.8f, 0.8f, 0.2f);
         localRay.setShadows(true);
         return localRay;
     }
@@ -92,10 +92,17 @@ public class PlayScreen implements Screen, NetListener {
 		for(Player player: players.values()) {
 			player.update(delta);
 			if(isGoing) {
-				player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
+                if(player.b2body.getLinearVelocity().x < 8){
+                    player.b2body.applyForce(new Vector2(3f, 0), player.b2body.getWorldCenter(), true);
+                }
 			}
 		}
+
 		hud.update(delta);
+        if(hud.getTime() == 0){
+            isGoing = true;
+        }
+
 		world.step(1 / 60f, 6, 2);
 		
 		for(Player player: players.values()) {
@@ -135,7 +142,9 @@ public class PlayScreen implements Screen, NetListener {
         rayHandler.render();
 
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-		hud.stage.draw();
+        if(hud.getTime() > 0){
+            hud.stage.draw();
+        }
 	}
 
 	@Override

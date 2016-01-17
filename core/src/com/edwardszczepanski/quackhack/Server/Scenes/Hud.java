@@ -27,20 +27,17 @@ public class Hud implements Disposable {
     // Now we create our widgets. Our widgets will be labels, essentially text, that allow us to display Game Information
 
     private Label countdownLabel;
-    static Label scoreLabel;
     private Label timeLabel;
-    private Label levelLabel;
-    private Label worldLabel;
     private Label nameLabel;
-    private BitmapFont font;
+    private Label playerLabel;
 
-    public Hud(SpriteBatch sb){
-        worldTimer = 300;
+    public Hud(QuackHack game){
+        worldTimer = 10;
         timeCount = 0;
         score = 0;
 
         viewport = new ExtendViewport(960, 640, new OrthographicCamera());
-        stage = new Stage(viewport, sb);
+        stage = new Stage(viewport, game.batch);
 
         Table table = new Table();
         table.top();
@@ -48,24 +45,24 @@ public class Hud implements Disposable {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 36;
-        font = generator.generateFont(parameter);
 
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(font, Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(font, Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(font, Color.WHITE));
-        nameLabel = new Label("InfernoDucks", new Label.LabelStyle(font, Color.WHITE));
 
-        table.add(nameLabel).expandX().padTop(10);
-        table.add(worldLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
+        parameter.size = 150;
+        countdownLabel = new Label(String.format("%d", worldTimer), new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
+        parameter.size = 24;
+        timeLabel = new Label("GAME START IN ", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
+        parameter.size = 80;
+        nameLabel = new Label("INFERNO DUCKS", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
+        parameter.size = 30;
+        playerLabel = new Label(String.format("%d ", game.getServer().getPlayers().size) + " PLAYERS WAITING", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
 
+        table.add(nameLabel).expandX().padTop(100);
         table.row();
-        table.add(scoreLabel).expandX();
-        table.add(levelLabel).expandX();
-        table.add(countdownLabel).expandX();
+        table.add(timeLabel).expandX().padTop(55);
+        table.row();
+        table.add(countdownLabel).expandX().pad(30);
+        table.row();
+        table.add(playerLabel).expandX();
 
         stage.addActor(table);
     }
@@ -74,14 +71,23 @@ public class Hud implements Disposable {
         timeCount += dt;
         if(timeCount >= 1){
             worldTimer--;
-            countdownLabel.setText(String.format("%03d", worldTimer));
+
+
+            countdownLabel.setText(String.format("%d", worldTimer));
+            if(worldTimer == 3){
+                countdownLabel.setText("READY");
+            }
+            else if( worldTimer ==2){
+                countdownLabel.setText("SET");
+            }
+            else if( worldTimer ==1){
+                countdownLabel.setText("GO");
+            }
             timeCount = 0;
         }
     }
-
-    public static void addScore(int value){
-        score += value;
-        scoreLabel.setText(String.format("%06d", score));
+    public int getTime(){
+        return worldTimer;
     }
 
     @Override
