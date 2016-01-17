@@ -44,7 +44,7 @@ public class QuackHack extends Game {
 		} else {
 			// Run client
 			client = new NetClient();
-			setScreen(new com.edwardszczepanski.quackhack.Client.Screens.MenuScreen(game));
+			setScreen(new com.edwardszczepanski.quackhack.Client.Screens.ControlScreen(game));
 		}
 	}
 

@@ -37,7 +37,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	// Sprites
 	private HashMap<Integer, Player> players = new HashMap<Integer, Player>();
-	private BitmapFont font12;
 
 	// Tiled Map Variables
 	private TmxMapLoader maploader;
@@ -67,22 +66,6 @@ public class PlayScreen implements Screen, NetListener {
 		game.getServer().registerNetListener(this);
 	}
 
-	public void update(float delta) {
-		for(Player player: players.values()) {
-			player.update(delta);
-			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 2) {
-				player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-			}
-		}
-		hud.update(delta);
-		world.step(1 / 60f, 6, 2);
-		for(Player player: players.values()) {
-			gamecam.position.x = player.b2body.getPosition().x;
-		}
-		gamecam.update();
-		renderer.setView(gamecam);
-	}
-
 	@Override
 	public void render(float delta) {
 		update(delta);
@@ -106,6 +89,29 @@ public class PlayScreen implements Screen, NetListener {
 		hud.stage.draw();
 	}
 
+    public void update(float delta) {
+        for(Player player: players.values()) {
+            player.update(delta);
+            if(player.isGoing() && player.b2body.getLinearVelocity().x <= 2) {
+                player.b2body.applyLinearImpulse(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
+            }
+        }
+        hud.update(delta);
+        world.step(1 / 60f, 6, 2);
+        for(Player player: players.values()) {
+            gamecam.position.x = player.b2body.getPosition().x;
+        }
+        gamecam.update();
+        renderer.setView(gamecam);
+    }
+
+    @Override
+    public void netJump(Integer id) {
+        if(players.get(id).getTouching()){
+            players.get(id).b2body.applyLinearImpulse(new Vector2(0, 4f), players.get(id).b2body.getWorldCenter(), true);
+        }
+    }
+
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
@@ -114,42 +120,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	public TextureAtlas getAtlas() {
 		return atlas;
-	}
-
-	@Override
-	public void dispose() {
-		map.dispose();
-		renderer.dispose();
-		world.dispose();
-		b2dr.dispose();
-		hud.dispose();
-	}
-
-	@Override
-	public void show() {
-
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-
-	}
-
-	@Override
-	public void netJump(Integer id) {
-        if(players.get(id).getTouching()){
-            players.get(id).b2body.applyLinearImpulse(new Vector2(0, 4f), players.get(id).b2body.getWorldCenter(), true);
-        }
 	}
 
 	@Override
@@ -179,5 +149,33 @@ public class PlayScreen implements Screen, NetListener {
 		System.out.println("Stop!");
 		players.get(id).isGoing(false);
 	}
+    @Override
+    public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
 
 }
