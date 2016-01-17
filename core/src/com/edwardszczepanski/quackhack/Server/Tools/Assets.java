@@ -7,7 +7,7 @@ public class Assets {
 	
 	public static TextureAtlas getAtlas() {
 		if(atlas == null) {
-			atlas = new TextureAtlas("sheet.txt");
+			atlas = new TextureAtlas("spritePack.txt");
 		}
 		return atlas;
 	}

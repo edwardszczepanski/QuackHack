@@ -21,24 +21,27 @@ public class Player extends Sprite{
 
     public World world;
     public Body b2body;
-    private TextureRegion marioStand;
+    private TextureRegion playerRegion;
     private boolean touchingGround;
     private boolean isGoing;
     private PointLight pointLight;
 
 
     public Player (World world, PlayScreen screen){
-        super(Assets.getAtlas().findRegion("duck_standing"));
+        super(Assets.getAtlas().findRegion("boxCrate_double"));
+
+        playerRegion = new TextureRegion(getTexture(), 0, 0, 128, 128);
+        setBounds(0,0, 128, 128);
+        setRegion(playerRegion);
+        setOrigin(getHeight() / 2, getWidth() / 2);
         
         this.world = world;
         touchingGround = false;
         isGoing = false;
 
-        defineMario();
-        marioStand = new TextureRegion(getTexture(), 1, 11, 16, 16);
+        definePlayer();
         // Now we do the bounds for how large to render it
         setBounds(0, 0, 16 / QuackHack.PPM, 16 / QuackHack.PPM);
-        setRegion(marioStand);
         defineLights();
     }
     public void defineLights(){
@@ -51,7 +54,7 @@ public class Player extends Sprite{
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
     }
 
-    public void defineMario(){
+    public void definePlayer(){
         BodyDef bdef = new BodyDef();
         bdef.position.set(100 / QuackHack.PPM, 1500 / QuackHack.PPM); // Mario start position
         bdef.type = BodyDef.BodyType.DynamicBody;
