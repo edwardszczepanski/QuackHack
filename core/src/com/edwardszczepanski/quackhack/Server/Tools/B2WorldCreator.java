@@ -12,14 +12,18 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
 import com.edwardszczepanski.quackhack.Server.Sprites.Box;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by edwardszc on 1/15/16.
  */
 public class B2WorldCreator {
 
-	public B2WorldCreator(World world, TiledMap map){
+	public B2WorldCreator(World world, TiledMap map, PlayScreen screen){
 		BodyDef bdef = new BodyDef();
 		PolygonShape shape = new PolygonShape();
 		FixtureDef fdef = new FixtureDef();
@@ -60,7 +64,7 @@ public class B2WorldCreator {
 		}
 		
 		for(MapObject object: map.getLayers().get("Dynamic").getObjects().getByType(RectangleMapObject.class)){
-			new Box(world, object);
+            screen.addBoxList(new Box(world, object));
 		}
 	}
 
