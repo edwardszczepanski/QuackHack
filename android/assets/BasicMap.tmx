@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="128" tileheight="128" nextobjectid="144">
+ <tileset firstgid="1" name="Kenny" tilewidth="128" tileheight="128" tilecount="128" columns="8">
+  <image source="spritesheet_ground.png" width="1024" height="2048"/>
+ </tileset>
+ <tileset firstgid="129" name="Kenny Object" tilewidth="128" tileheight="128" tilecount="32" columns="8">
+  <image source="spritesheet_items.png" width="1024" height="512"/>
+ </tileset>
+ <tileset firstgid="161" name="Die/Speed Bump" tilewidth="128" tileheight="128" tilecount="128" columns="8">
+  <image source="spritesheet_tiles.png" width="1024" height="2048"/>
+ </tileset>
+ <layer name="Graphics Layer" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztlzEPwiAQhbEbY8eOjo6Ojo6Ojo6Ojv4M/7WQlPh8OcpBwRrtS17SXg1c7/MRNWbVqlXfpsHZOl+g5u+34/XdeQN1S5+zcH2DNXG9a8F9WBvrvyoLPjl39Nzfn82LSY6Gcc0WCpx+iZF/p04wKtSQic+JjRhzIfFd9S4+Z1JCTtqcIIvaPHrzfoa21sPI37sa+2MetOLsxHIi5aI2jz6xru9jI9RTOjjvYA+evXSGlJ7huXlg5fQisZjDIzWXWK9BOGejqOMaGucyKcmDtj/uJcaixd5aHhoxmxweGiZz88DS9DLFYikeR3o2lYmcPWNz4CxLPdWQppcpFt+ajxifEh413jn890u5Vn8tzJLq2lzwGi15+Nnz74alZ/kpHiw+x7heq7d+wkvPbQkeqVy0Pq/+0bFZSvLz349mDshG2ucJq84dRg==
+  </data>
+ </layer>
+ <objectgroup name="Powerups">
+  <object id="65" x="5508" y="644" width="122.667" height="120"/>
+  <object id="68" x="5510.67" y="1028" width="121.333" height="128"/>
+  <object id="69" x="4104" y="134" width="118" height="122"/>
+  <object id="89" x="9339.16" y="644.952">
+   <polygon points="0,0 131.446,121.547 3.45908,124.745"/>
+  </object>
+  <object id="107" x="9596" y="252" width="136" height="124"/>
+  <object id="108" x="11004" y="1032" width="136" height="112"/>
+  <object id="109" x="11528" y="1156" width="124" height="112"/>
+  <object id="110" x="11924" y="1408" width="108" height="124"/>
+  <object id="111" x="11276" y="1676" width="116" height="112"/>
+ </objectgroup>
+ <layer name="Powerups" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1rENACAMA7Bez4S4mZGVBZVI9gVZmqYKjtEdgFizOwAQY3UHALiUtG/s+L/5fXAnqXfhJbeQbQOwaARZ
+  </data>
+ </layer>
+ <objectgroup name="Ground">
+  <object id="17" x="7.85855" y="777.996" width="624.754" height="117.878"/>
+  <object id="18" x="648.33" y="789.784">
+   <polygon points="0,0 499.018,495.088 0,495.088"/>
+  </object>
+  <object id="21" x="1159.14" y="1292.73" width="499.018" height="499.018"/>
+  <object id="22" x="1673.87" y="1666.01" width="880.157" height="121.807"/>
+  <object id="23" x="2569.74" y="1673.87">
+   <polygon points="0,0 125.737,-137.525 129.666,-3.92927"/>
+  </object>
+  <object id="27" x="2703.34" y="1540.28" width="491.159" height="113.949"/>
+  <object id="33" x="3206.67" y="1536">
+   <polygon points="0,0 122.667,-125.333 121.333,2.66667"/>
+  </object>
+  <object id="36" x="3333.33" y="1412" width="1145.33" height="120"/>
+  <object id="37" x="4485.33" y="258.667" width="120" height="1150.67"/>
+  <object id="40" x="1925.33" y="1157.33" width="246.667" height="246.667"/>
+  <object id="43" x="2305.33" y="1032" width="124" height="118.667"/>
+  <object id="44" x="2436" y="901.333" width="249.333" height="249.333"/>
+  <object id="45" x="2820" y="774.667" width="122.667" height="117.333"/>
+  <object id="46" x="2949.33" y="641.333" width="248" height="252"/>
+  <object id="47" x="3332" y="513.333" width="121.333" height="125.333"/>
+  <object id="49" x="3458.67" y="382.667" width="632" height="253.333"/>
+  <object id="50" x="3852" y="378.667">
+   <polygon points="0,0 116,-122.667 378.667,-121.333"/>
+  </object>
+  <object id="52" x="4612" y="260">
+   <polygon points="0,0 1020,1024 -1.33333,1020"/>
+  </object>
+  <object id="53" x="5636" y="1281.33">
+   <polygon points="0,0 1020,-1021.33 1017.33,1.33333"/>
+  </object>
+  <object id="62" x="5250.67" y="260" width="250.667" height="120"/>
+  <object id="63" x="5765.33" y="261.333" width="248" height="117.333"/>
+  <object id="72" x="6660.61" y="260.606" width="118.182" height="112.121"/>
+  <object id="73" x="7039.39" y="266.667" width="251.515" height="106.061"/>
+  <object id="74" x="7557.58" y="263.636" width="248.485" height="112.121"/>
+  <object id="75" x="8066.59" y="260.003" width="252.781" height="118.785"/>
+  <object id="76" x="8576.48" y="260.003" width="509.895" height="115.755"/>
+  <object id="77" x="9360.61" y="390.909" width="354.545" height="112.121"/>
+  <object id="79" x="8959.27" y="775.758" width="135.779" height="242.424"/>
+  <object id="84" x="8451.52" y="906.061" width="506.061" height="1006.06"/>
+  <object id="87" x="9096.97" y="645.455" width="239.394" height="127.273"/>
+  <object id="91" x="9986" y="778" width="252" height="1148"/>
+  <object id="92" x="10506" y="904" width="242" height="68"/>
+  <object id="93" x="10368" y="1156" width="130" height="76"/>
+  <object id="94" x="10380" y="1668" width="240" height="74"/>
+  <object id="95" x="10622" y="1412" width="262" height="72"/>
+  <object id="96" x="10882" y="1156" width="256" height="70"/>
+  <object id="97" x="11262" y="900" width="262" height="68"/>
+  <object id="98" x="11780" y="772" width="252" height="64"/>
+  <object id="99" x="11652" y="1026" width="250" height="78"/>
+  <object id="100" x="11396" y="1288" width="252" height="64"/>
+  <object id="101" x="11140" y="1540" width="124" height="76"/>
+  <object id="102" x="11906" y="1546" width="122" height="68"/>
+  <object id="103" x="11394" y="1670" width="256" height="70"/>
+  <object id="104" x="10884" y="1796" width="506" height="72"/>
+  <object id="105" x="11774" y="1798" width="256" height="66"/>
+  <object id="106" x="12162" y="770" width="634" height="1148"/>
+  <object id="114" x="4998" y="264" width="118" height="116"/>
+  <object id="115" x="6152" y="264" width="116" height="120"/>
+  <object id="116" x="5256" y="520" width="754" height="112"/>
+  <object id="119" x="5016.61" y="269.132">
+   <polygon points="0,0 0,112.205 -155.28,-5.51829"/>
+  </object>
+  <object id="120" x="6265.72" y="263.589">
+   <polygon points="0,0 1.76083,120.637 142.627,-4.30848"/>
+  </object>
+  <object id="121" x="5281.67" y="518">
+   <polygon points="0,0 0,120 -158.891,-2"/>
+  </object>
+  <object id="122" x="6000.79" y="521.278">
+   <polygon points="0,0 -1.73087,120.785 145.393,2.23676"/>
+  </object>
+  <object id="142" x="5886.18" y="770.62">
+   <polygon points="0,0 -509.172,-1.44446 -510.617,41.8894 -382.782,124.946 -126.39,124.224 0.72223,41.8894"/>
+  </object>
+ </objectgroup>
+ <layer name="Water" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0UEJAEAIAEH7x/BpSjsIgsfNwCbYCAAA4BU5jB01jB1+3OIHAD9qyz4kwQ==
+  </data>
+ </layer>
+ <objectgroup name="Water">
+  <object id="71" x="6669.7" y="909.091" width="1769.7" height="496.97"/>
+ </objectgroup>
+ <layer name="Lava" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0TENADAMBLGo/KF0LMDuAZD8YEuH4KoAAGDebbHrtdjlRxY/sviRxY8sfmTxI8epuR8famIZMw==
+  </data>
+ </layer>
+ <objectgroup name="Lava">
+  <object id="85" x="9472.73" y="784.848" width="503.03" height="1124.24"/>
+ </objectgroup>
+ <layer name="Coins" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0tENwCAIBUD3H8JZnUCjtqQV7/4h4fFKgTU1cPbJbvgDHX5Pxiwz3oS/ztrNqTcn93v5/bfkn1vUf0d7Izulr/ToBifS23M0ABgLHQ==
+  </data>
+ </layer>
+ <objectgroup name="Coins">
+  <object id="123" x="1544" y="1180" width="108" height="88"/>
+  <object id="124" x="2064" y="1048" width="100" height="104"/>
+  <object id="125" x="2444" y="1520" width="108" height="144"/>
+  <object id="126" x="3080" y="528" width="120" height="104"/>
+  <object id="127" x="4116" y="1292" width="120" height="120"/>
+  <object id="128" x="5260" y="144" width="108" height="112"/>
+  <object id="129" x="5260" y="404" width="112" height="104"/>
+  <object id="130" x="7180" y="124" width="108" height="124"/>
+  <object id="131" x="8192" y="132" width="120" height="112"/>
+  <object id="132" x="8836" y="776" width="124" height="120"/>
+  <object id="133" x="9852" y="520" width="132" height="120"/>
+  <object id="134" x="10636" y="772" width="112" height="116"/>
+  <object id="135" x="11404" y="780" width="116" height="104"/>
+  <object id="136" x="12164" y="648" width="124" height="116"/>
+  <object id="137" x="10760" y="1284" width="112" height="116"/>
+  <object id="138" x="11916" y="1676" width="116" height="104"/>
+  <object id="139" x="6916" y="1300" width="124" height="104"/>
+  <object id="140" x="7812" y="1288" width="120" height="112"/>
+ </objectgroup>
+</map>

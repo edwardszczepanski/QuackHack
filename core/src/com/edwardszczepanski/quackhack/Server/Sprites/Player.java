@@ -34,7 +34,7 @@ public class Player extends Sprite{
 
 
     public Player (World world, PlayScreen screen){
-        super(screen.getAtlas().findRegion("little_mario"));
+        super(screen.getAtlas().findRegion("duck_standing"));
 
         this.world = world;
         currentState = State.STANDING;
@@ -120,7 +120,7 @@ public class Player extends Sprite{
 
     public void defineMario(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / QuackHack.PPM, 400 / QuackHack.PPM); // Mario start position
+        bdef.position.set(100 / QuackHack.PPM, 1500 / QuackHack.PPM); // Mario start position
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

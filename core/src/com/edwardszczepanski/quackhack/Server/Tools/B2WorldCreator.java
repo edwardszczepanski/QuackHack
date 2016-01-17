@@ -26,14 +26,14 @@ public class B2WorldCreator {
 		
 		for(MapObject object: map.getLayers().get("Ground").getObjects().getByType(RectangleMapObject.class)){
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
+			
 			bdef.type = BodyDef.BodyType.StaticBody;
 			bdef.position.set((rect.getX()+rect.getWidth()/2)/ QuackHack.PPM, (rect.getY() + rect.getHeight()/2)/QuackHack.PPM); // I don't follow the math
-
 			body = world.createBody(bdef);
 
 			shape.setAsBox(rect.getWidth() / 2 / QuackHack.PPM, rect.getHeight() / 2 / QuackHack.PPM);
 			fdef.shape = shape;
+			fdef.friction = 1;
 			body.createFixture(fdef);
 		}
 		
