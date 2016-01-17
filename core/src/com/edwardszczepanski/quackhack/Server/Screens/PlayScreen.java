@@ -85,7 +85,6 @@ public class PlayScreen implements Screen, NetListener {
         return localRay;
     }
 
-
 	public void update(float delta) {
 		for(Player player: players.values()) {
 			player.update(delta);

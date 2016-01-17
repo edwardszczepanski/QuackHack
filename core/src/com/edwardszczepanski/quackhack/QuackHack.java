@@ -26,7 +26,7 @@ public class QuackHack extends Game {
 	private NetServer server;
 
 	public SpriteBatch batch;
-    private QuackHack game;
+    private static QuackHack game;
 	
 	@Override
 	public void create () {		
@@ -49,6 +49,10 @@ public class QuackHack extends Game {
 	public void render () {
 		super.render();
 	}
+
+    public QuackHack getGame(){
+        return game;
+    }
 	
 	public NetClient getClient() {
 		return client;
