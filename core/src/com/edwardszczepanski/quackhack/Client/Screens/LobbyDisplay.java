@@ -61,7 +61,6 @@ public class LobbyDisplay implements Disposable{
         table = new Table(skin);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
         one.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Round/elephant.png")))));
         two.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Round/giraffe.png")))));
         three.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Round/hippo.png")))));

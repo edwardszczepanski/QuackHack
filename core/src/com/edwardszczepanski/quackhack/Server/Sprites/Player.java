@@ -46,7 +46,7 @@ public class Player extends Sprite{
         defineLights();
     }
     public void defineLights(){
-        pointLight = new PointLight(PlayScreen.rayHandler, 150, Color.WHITE, 3f * 8*64/ QuackHack.PPM,0,0);
+        pointLight = new PointLight(PlayScreen.rayHandler, 150, Color.WHITE, 3f * 1.5f*64/ QuackHack.PPM,0,0);
         pointLight.setSoftnessLength(0f);
         pointLight.attachToBody(b2body);
     }

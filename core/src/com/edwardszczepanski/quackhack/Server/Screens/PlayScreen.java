@@ -88,6 +88,7 @@ public class PlayScreen implements Screen, NetListener {
 			System.out.println("New Player! id: "+game.getServer().getPlayerType(c.getID()).toString());
 			players.put(c.getID(), new Player(c.getID(), world, this, game.getServer().getPlayerType(c.getID())));
 		}
+		game.getServer().sendCommand(NetCommand.PLAYER_JOIN);
         //TextureRegion bg = new TextureRegion(new Texture(Gdx.files.internal("blue_grass.png")));
 
 
@@ -114,7 +115,6 @@ public class PlayScreen implements Screen, NetListener {
 
 		hud.update(delta);
         if(hud.getTime() == 0 && !isGoing){
-        	game.getServer().sendCommand(NetCommand.PLAYER_JOIN);
             isGoing = true;
         }
 
@@ -172,7 +172,8 @@ public class PlayScreen implements Screen, NetListener {
 			players.remove(p);
 		}
 		if(players.isEmpty()) {
-			reset();
+			game.getServerLobbyScreen().reset();
+			game.setScreen(game.getServerLobbyScreen());
 		}
 
 		
@@ -278,6 +279,7 @@ public class PlayScreen implements Screen, NetListener {
 		if(!isGoing) {
 			players.put(id, new Player(id, world, this, type));
 		}
+		game.getServer().sendCommand(id, NetCommand.PLAYER_JOIN);
 	}
 
 	@Override

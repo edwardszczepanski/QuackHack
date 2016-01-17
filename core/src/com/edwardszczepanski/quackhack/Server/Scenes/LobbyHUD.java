@@ -34,9 +34,7 @@ public class LobbyHUD implements Disposable {
 
     public LobbyHUD(QuackHack game){
         this.game = game;
-        worldTimer = 30;
-        timeCount = 0;
-        score = 0;
+        this.reset();
 
         viewport = new ExtendViewport(960*4, 640*4, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
@@ -76,15 +74,6 @@ public class LobbyHUD implements Disposable {
 
 
             countdownLabel.setText(String.format("%d", worldTimer));
-            if(worldTimer == 3){
-                countdownLabel.setText("READY");
-            }
-            else if( worldTimer ==2){
-                countdownLabel.setText("SET");
-            }
-            else if( worldTimer ==1){
-                countdownLabel.setText("GO");
-            }
             timeCount = 0;
         }
         playerLabel.setText(String.format("%d ", game.getServer().getPlayers().length) + "  PLAYERS WAITING");
@@ -97,4 +86,10 @@ public class LobbyHUD implements Disposable {
     public void dispose() {
         stage.dispose();
     }
+
+	public void reset() {
+        worldTimer = 30;
+        timeCount = 0;
+        score = 0;
+	}
 }
