@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
+import com.edwardszczepanski.quackhack.Server.Tools.UserData;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -31,6 +32,7 @@ public class Player extends Sprite{
     private boolean runningRight;
     private boolean touchingGround;
     private boolean isGoing;
+    private boolean isClimbing;
 
 
     public Player (World world, PlayScreen screen){
@@ -130,6 +132,7 @@ public class Player extends Sprite{
 
         fdef.filter.categoryBits = QuackHack.MARIO_BIT;
         fdef.filter.maskBits = QuackHack.DEFAULT_BIT;
+        fdef.friction = 1;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
@@ -145,8 +148,17 @@ public class Player extends Sprite{
         foot.set(new Vector2(-30 / QuackHack. PPM, -64 / QuackHack.PPM), new Vector2(30 / QuackHack. PPM, -64 / QuackHack.PPM));
         fdef.shape = foot;
         fdef.isSensor = true;
+        
+        b2body.createFixture(fdef).setUserData(new UserData(this, "foot"));
 
-        b2body.createFixture(fdef).setUserData(this);
+        
+        EdgeShape right = new EdgeShape();
+        right.set(new Vector2(64 / QuackHack. PPM, -50 / QuackHack.PPM), new Vector2(64 / QuackHack. PPM, 30 / QuackHack.PPM));
+        fdef.shape = right;
+        fdef.isSensor = true;
+        
+        b2body.createFixture(fdef).setUserData(new UserData(this, "right"));
+
     }
 
     public void setTouching(boolean input){
@@ -165,4 +177,11 @@ public class Player extends Sprite{
     public boolean isGoing() {
     	return isGoing;
     }
+
+	public void setClimbing(boolean b) {
+		isClimbing = b;
+	}
+	public boolean isClimbing() {
+		return isClimbing;
+	}
 }

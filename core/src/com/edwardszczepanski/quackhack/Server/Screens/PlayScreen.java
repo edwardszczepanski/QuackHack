@@ -72,7 +72,12 @@ public class PlayScreen implements Screen, NetListener {
 		for(Player player: players.values()) {
 			player.update(delta);
 			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 8) {
-				player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
+				//player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
+				player.b2body.applyLinearImpulse(new Vector2(8f, 0), player.b2body.getWorldCenter(), true);
+			}
+			if(player.isClimbing()) {
+				player.b2body.applyLinearImpulse(new Vector2(0, 8f), player.b2body.getWorldCenter(), true);
+				//player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, 8);
 			}
 		}
 		hud.update(delta);
@@ -163,7 +168,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netMoveRight(Integer id) {
-		System.out.println("Make it go!");
 		players.get(id).isGoing(true);
 	}
 
@@ -180,7 +184,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netEndMove(Integer id) {
-		System.out.println("Stop!");
 		players.get(id).isGoing(false);
 	}
 }

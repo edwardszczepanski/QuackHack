@@ -34,9 +34,7 @@ public class NetServer {
 						request.id = server.getConnections().length - 1;
 						System.out.println("New Connection! id: "+request.id);
 					}
-					
-					System.out.println("Command! id: "+request.id);
-					
+										
 					for(NetListener listener: listeners) {
 						switch(request.cmd) {
 						case PLAYER_CONNECTED:

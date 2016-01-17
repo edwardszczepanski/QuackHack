@@ -36,6 +36,8 @@ class TouchInfo {
 }
 
 public class ControlScreen implements Screen, InputProcessor {
+	private boolean isMoveTouched = false;
+	private boolean isJumpTouched = false;
     private MobileDisplay hud;
     private Map<Integer,TouchInfo> touches = new HashMap<Integer,TouchInfo>();
     QuackHack game;
@@ -56,19 +58,36 @@ public class ControlScreen implements Screen, InputProcessor {
 
     public void update(float delta){
         handleInput(delta);
+        boolean touchAtAllJ = false;
+        boolean touchAtAllM = false;
 
         for(int i = 0; i < 5; i++){
             if(touches.get(i).touched){
                 if(touches.get(i).touchX > Gdx.graphics.getWidth() /2){
-                    System.out.println("lolDown");
-                    game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
+                    if(!isMoveTouched) {
+                        game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
+                    }
+                    touchAtAllM = true;
+                	isMoveTouched = true;
                 }
                 else{
-                    System.out.println("lolClicked");
-                    game.getClient().sendCommand(NetCommand.JUMP);
+                    if(!isJumpTouched) {
+                        game.getClient().sendCommand(NetCommand.JUMP);
+                    }
+                	touchAtAllJ = true;
+                	isJumpTouched = true;
                 }
+            } else {
+            	if(!touchAtAllJ) {
+                	isJumpTouched = false;
+            	}
+            	if(!touchAtAllM) {
+            		isMoveTouched = false;
+            	}
             }
         }
+    	touchAtAllJ = false;
+    	touchAtAllM = false;
     }
 
     @Override
