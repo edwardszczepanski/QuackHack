@@ -9,6 +9,7 @@ import com.edwardszczepanski.quackhack.Client.Screens.LobbyScreen;
 import com.edwardszczepanski.quackhack.Net.NetClient;
 import com.edwardszczepanski.quackhack.Net.NetServer;
 import com.edwardszczepanski.quackhack.Server.Screens.ServerLobbyScreen;
+import com.edwardszczepanski.quackhack.Server.Screens.SplashScreen;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -44,14 +45,12 @@ public class QuackHack extends Game {
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			// Run server
 			server = new NetServer();
-			setScreen(getServerLobbyScreen());
+			setScreen(new SplashScreen(game));
 
 		} else {
 			// Run client
 			client = new NetClient();
-
 			setScreen(new LobbyScreen(game));
-
 		}
 	}
 

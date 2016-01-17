@@ -61,7 +61,6 @@ public class LobbyDisplay implements Disposable{
         table = new Table(skin);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
         one.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Round/elephant.png")))));
         two.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Round/giraffe.png")))));
         three.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Round/hippo.png")))));
@@ -82,7 +81,7 @@ public class LobbyDisplay implements Disposable{
 
         heading = new Label("CHOOSE CHARACTER CURRENT: ELEPHANT", new Label.LabelStyle(font, Color.WHITE));
 
-        headingTable.add(heading).expandX().padTop(15);
+        headingTable.add(heading).expandX().padTop(35);
         headingTable.top();
 
         table.add(one).expandX();
@@ -96,7 +95,7 @@ public class LobbyDisplay implements Disposable{
         table.add(eight).expandX();
         table.add(nine).expandX();
         table.add(ten).expandX();
-        table.debug(); // This enables all the debug lines
+        //table.debug(); // This enables all the debug lines
         stage.addActor(headingTable);
         stage.addActor(table);
 

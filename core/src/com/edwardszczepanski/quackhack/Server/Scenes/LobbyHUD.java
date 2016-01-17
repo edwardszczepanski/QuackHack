@@ -72,7 +72,6 @@ public class LobbyHUD implements Disposable {
         if(timeCount >= 1){
             worldTimer--;
 
-
             countdownLabel.setText(String.format("%d", worldTimer));
             timeCount = 0;
         }
