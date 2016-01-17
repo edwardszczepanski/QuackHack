@@ -2,6 +2,7 @@ package com.edwardszczepanski.quackhack.Net;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player.PlayerType;
@@ -13,6 +14,8 @@ import com.esotericsoftware.kryonet.Listener;
 public class NetClient {
 	private Client client = new Client();
 	private PlayerType type = PlayerType.snake;
+	private Array<NetListener> listeners = new Array<NetListener>();
+
 
 	public NetClient() {
 		Kryo kryo = this.client.getKryo();
@@ -47,11 +50,38 @@ public class NetClient {
 		client.addListener(new Listener() {
 			public void received (Connection connection, Object object) {
 				if (object instanceof Update) {
-					Update response = (Update)object;
-					System.out.println(response.cmd);
+					Update request = (Update)object;
+					int id = connection.getID();
+					
+					System.out.println("command :: id: "+id + " cmd: "+ request.cmd.toString());
+
+					switch(request.cmd) {
+					case PLAYER_JOIN:
+						for(NetListener listener: listeners) {
+							listener.netPlayerJoin(id);
+						}
+						break;
+						
+					case PLAYER_DIED:
+						for(NetListener listener: listeners) {
+							listener.netPlayerDied(id);
+						}
+						break;
+
+					case PING:
+					default:
+						for(NetListener listener: listeners) {
+							listener.netPing(id);
+						}
+						break;
+					}
 				}
 			}
 		});
+	}
+	
+	public void registerNetListener(NetListener listener) {
+		listeners.add(listener);
 	}
 
 	public void sendCommand(NetCommand cmd) {

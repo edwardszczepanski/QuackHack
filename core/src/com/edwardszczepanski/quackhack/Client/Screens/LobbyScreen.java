@@ -5,18 +5,20 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Net.NetCommand;
+import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player.PlayerType;
 
 /**
  * Created by edwardszc on 1/15/16.
  */
 
-public class LobbyScreen implements Screen {
+public class LobbyScreen implements Screen, NetListener {
     private LobbyDisplay hud;
     QuackHack game;
 
     public LobbyScreen(QuackHack game){
         this.game = game;
+        game.getClient().registerNetListener(this);
         hud = new LobbyDisplay(game);
     }
 
@@ -120,5 +122,33 @@ public class LobbyScreen implements Screen {
     public void dispose() {
         hud.dispose();
     }
+    
+	@Override
+	public void netPing(Integer id) {}
+
+	@Override
+	public void netPlayerConnected(Integer id, PlayerType type) {}
+
+	@Override
+	public void netPlayerDisconnected(Integer id) {}
+
+	@Override
+	public void netPlayerJoin(Integer id) {
+		 Gdx.app.postRunnable(new Runnable() {
+	         @Override
+	         public void run() {
+	     		game.setScreen(game.getControlScreen());
+	         }
+		 });
+	}
+
+	@Override
+	public void netPlayerDied(Integer id) {}
+
+	@Override
+	public void netJump(Integer id) {}
+
+	@Override
+	public void netPlayerType(int id, PlayerType type) {}
 
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.edwardszczepanski.quackhack.Client.Screens.ControlScreen;
 import com.edwardszczepanski.quackhack.Client.Screens.LobbyScreen;
 import com.edwardszczepanski.quackhack.Net.NetClient;
 import com.edwardszczepanski.quackhack.Net.NetServer;
@@ -28,6 +29,9 @@ public class QuackHack extends Game {
 
 	public SpriteBatch batch;
     private static QuackHack game;
+    
+    private LobbyScreen   cLS;
+    private ControlScreen cCS;
 	
 	@Override
 	public void create () {		
@@ -70,5 +74,19 @@ public class QuackHack extends Game {
 			game = new QuackHack();
 		}
 		return game;
+	}
+
+	public LobbyScreen getLobbyScreen() {
+		if(cLS == null) {
+			cLS = new LobbyScreen(this);
+		}
+		return cLS;
+	}
+	
+	public ControlScreen getControlScreen() {
+		if(cCS == null) {
+			cCS = new ControlScreen(this);
+		}
+		return cCS;
 	}
 }
