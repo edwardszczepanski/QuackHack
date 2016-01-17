@@ -40,10 +40,6 @@ public class MobileDisplay implements Disposable{
     public MobileDisplay(final QuackHack game){
 
         stage = new Stage();
-
-
-
-
         atlas = new TextureAtlas("font/atlas.pack");
         skin = new Skin(Gdx.files.internal("font/menuSkin.json"), new TextureAtlas("font/atlas.pack"));
         table = new Table(skin);

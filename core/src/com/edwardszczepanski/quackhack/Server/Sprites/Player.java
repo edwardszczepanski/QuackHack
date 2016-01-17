@@ -1,5 +1,6 @@
 package com.edwardszczepanski.quackhack.Server.Sprites;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,27 +15,26 @@ import com.badlogic.gdx.utils.Array;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
 
+import box2dLight.ConeLight;
+import box2dLight.PointLight;
+
 /**
  * Created by edwardszc on 1/15/16.
  */
 public class Player extends Sprite{
 
-    public enum State { FALLING, JUMPING, STANDING, RUNNING};
-    public State currentState;
-    public State previousState;
     public World world;
     public Body b2body;
     private TextureRegion marioStand;
     private boolean touchingGround;
     private boolean isGoing;
+    private PointLight pointLight;
 
 
     public Player (World world, PlayScreen screen){
         super(screen.getAtlas().findRegion("duck_standing"));
         
         this.world = world;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
         touchingGround = false;
         isGoing = false;
 
@@ -43,6 +43,12 @@ public class Player extends Sprite{
         // Now we do the bounds for how large to render it
         setBounds(0, 0, 16 / QuackHack.PPM, 16 / QuackHack.PPM);
         setRegion(marioStand);
+        defineLights();
+    }
+    public void defineLights(){
+        pointLight = new PointLight(PlayScreen.rayHandler, 150, Color.WHITE, 3f * 8*64/ QuackHack.PPM,0,0);
+        pointLight.setSoftnessLength(0f);
+        pointLight.attachToBody(b2body);
     }
 
     public void update(float delta){

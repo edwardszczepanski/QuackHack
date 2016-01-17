@@ -25,7 +25,7 @@ public class ControlScreen implements Screen {
 
     public void handleInput(float delta){
         if(Gdx.input.justTouched()){
-            game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
+            game.getClient().sendCommand(NetCommand.JUMP);
         }
     }
 
