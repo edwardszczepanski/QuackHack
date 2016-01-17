@@ -14,8 +14,6 @@ import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
 import com.edwardszczepanski.quackhack.Server.Tools.Assets;
 
-import java.util.ArrayList;
-
 /**
  * Created by edwardszc on 1/15/16.
  */
@@ -27,13 +25,15 @@ public class Player extends Sprite{
     private boolean touchingGround;
     private boolean isGoing;
     private PointLight pointLight;
+    private Integer id;
 
 
-    public Player (World world, PlayScreen screen){
+    public Player (Integer id, World world, PlayScreen screen, PlayerType type){
         setBounds(0, 0, 128 / QuackHack.PPM, 128 / QuackHack.PPM);
-        setRegion(Assets.getAtlas().findRegion("snake"));
+        setRegion(Assets.getAtlas().findRegion(type.toString()));
         setOrigin(getHeight() / 2, getWidth() / 2);
         
+        this.id = id;
         this.world = world;
         touchingGround = false;
         isGoing = false;
@@ -88,5 +88,16 @@ public class Player extends Sprite{
     public boolean isGoing() {
     	return isGoing;
     }
+    
+    public enum PlayerType {
+    	elephant, giraffe, hippo, monkey, panda, parrot, penguin, pig, rabbit, snake, boxCrate_double
+    }
 
+	public void destroy() {
+		world.destroyBody(b2body);
+	}
+	
+	public Integer getId() {
+		return id;
+	}
 }

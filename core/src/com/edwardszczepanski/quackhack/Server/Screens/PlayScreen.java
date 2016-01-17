@@ -16,14 +16,18 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Net.NetCommand;
 import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
 import com.edwardszczepanski.quackhack.Server.Sprites.Box;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player;
+import com.edwardszczepanski.quackhack.Server.Sprites.Player.PlayerType;
 import com.edwardszczepanski.quackhack.Server.Tools.B2WorldCreator;
 import com.edwardszczepanski.quackhack.Server.Tools.WorldContactListener;
+import com.esotericsoftware.kryonet.Connection;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -75,8 +79,9 @@ public class PlayScreen implements Screen, NetListener {
 
         rayHandler = rayHandlerGenerator();
 
-		for(Integer id: game.getServer().getPlayers()) {
-			players.put(id, new Player(world, this));
+		for(Connection c: game.getServer().getPlayers()) {
+			System.out.println("New Player! id: "+c.getID());
+			players.put(c.getID(), new Player(c.getID(), world, this, PlayerType.snake));
 		}
 	}
 
@@ -125,7 +130,7 @@ public class PlayScreen implements Screen, NetListener {
 		}
 		
 		float newWidth = (maxX-minX)*1.5f;
-		float centerX = maxX-(newWidth*0.25f);
+		float centerX = maxX-Math.min(gamecam.viewportWidth*0.75f, newWidth*0.25f);
 		
 		if(newWidth < gamecam.viewportWidth) {
 			newWidth = gamecam.viewportWidth;
@@ -138,6 +143,22 @@ public class PlayScreen implements Screen, NetListener {
 		gamecam.zoom = newWidth/gamecam.viewportWidth;
 		gamecam.position.x = centerX;
 		gamecam.update();
+		
+		float camEdge = gamecam.position.x - gamecam.viewportWidth*gamecam.zoom/2;
+		Array<Integer> des = new Array<Integer>();
+		
+		for(Player player: players.values()) {
+			if(camEdge-(player.getWidth()*2) > player.getX() || player.getY() < -player.getHeight()) {
+				des.add(player.getId());
+			}
+		}
+		for(Integer p: des) {
+			players.remove(p);
+		}
+		if(players.isEmpty()) {
+			reset();
+		}
+		
 		
 		
 		renderer.setView(gamecam);
@@ -154,7 +175,7 @@ public class PlayScreen implements Screen, NetListener {
 		renderer.render();
 
 		//renderer our Box2DDebugLines
-		b2dr.render(world, gamecam.combined);
+		//b2dr.render(world, gamecam.combined);
 
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
@@ -201,55 +222,48 @@ public class PlayScreen implements Screen, NetListener {
 	}
 
 	@Override
-	public void show() {
-
-	}
+	public void show() {}
 
 	@Override
-	public void pause() {
-
-	}
+	public void pause() {}
 
 	@Override
-	public void resume() {
-
-	}
+	public void resume() {}
 
 	@Override
-	public void hide() {
-	}
+	public void hide() {}
 
+	@Override
+	public void netPing(Integer id) {}
+	
 	@Override
 	public void netJump(Integer id) {
-        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 150f), players.get(id).b2body.getWorldCenter(), true);
+		System.out.println(id);
+		System.out.println(players.size());
+		System.out.println(players.toString());
+		
+		Player p = players.get(id);
+		if(p != null) {
+	        p.b2body.applyLinearImpulse(new Vector2(0, 150f), p.b2body.getWorldCenter(), true);
+		}
 	}
-
+	
 	@Override
-	public void netPing(Integer id) {
-		// TODO Auto-generated method stub
-	}
-
+	public void netPlayerJoin(Integer id) {}
+	
 	@Override
-	public void netMoveRight(Integer id) {
-		isGoing = true;
-		players.get(id).isGoing(true);
-	}
+	public void netPlayerDied(Integer id) {}
 
 	@Override
 	public void netPlayerConnected(Integer id) {
-		players.put(id, new Player(world, this));
+		if(!isGoing) {
+			players.put(id, new Player(id, world, this, PlayerType.snake));
+			game.getServer().sendCommand(id, NetCommand.PLAYER_JOIN);
+		}
 	}
 
 	@Override
-	public void netPlayerDisconnected(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void netEndMove(Integer id) {
-		players.get(id).isGoing(false);
-	}
+	public void netPlayerDisconnected(Integer id) {}
 	
 	public void reset() {
 		game.setScreen(new PlayScreen(game));

@@ -6,8 +6,8 @@ public interface NetListener {
 	public void netPlayerConnected(Integer id);
 	public void netPlayerDisconnected(Integer id);
 	
+	public void netPlayerJoin(Integer id);
+	public void netPlayerDied(Integer id);
+	
 	public void netJump(Integer id);
-	public void netMoveRight(Integer id);
-
-	public void netEndMove(Integer id);
 }
