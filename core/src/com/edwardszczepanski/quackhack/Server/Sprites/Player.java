@@ -35,7 +35,7 @@ public class Player extends Sprite{
 
     public Player (World world, PlayScreen screen){
         super(screen.getAtlas().findRegion("duck_standing"));
-
+        
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;

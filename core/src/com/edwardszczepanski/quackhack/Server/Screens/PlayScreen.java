@@ -57,7 +57,7 @@ public class PlayScreen implements Screen, NetListener {
 		hud = new Hud(game.batch);
 		maploader = new TmxMapLoader();
 
-		map = maploader.load("BasicMap.tmx");
+		map = maploader.load("ExtendedMap.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
 
 		gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);

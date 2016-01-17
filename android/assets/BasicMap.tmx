@@ -11,7 +11,7 @@
  </tileset>
  <layer name="Graphics Layer" width="100" height="15">
   <data encoding="base64" compression="zlib">
-   eJztlzEPwiAQhbEbY8eOjo6Ojo6Ojo6Ojv4M/7WQlPh8OcpBwRrtS17SXg1c7/MRNWbVqlXfpsHZOl+g5u+34/XdeQN1S5+zcH2DNXG9a8F9WBvrvyoLPjl39Nzfn82LSY6Gcc0WCpx+iZF/p04wKtSQic+JjRhzIfFd9S4+Z1JCTtqcIIvaPHrzfoa21sPI37sa+2MetOLsxHIi5aI2jz6xru9jI9RTOjjvYA+evXSGlJ7huXlg5fQisZjDIzWXWK9BOGejqOMaGucyKcmDtj/uJcaixd5aHhoxmxweGiZz88DS9DLFYikeR3o2lYmcPWNz4CxLPdWQppcpFt+ajxifEh413jn890u5Vn8tzJLq2lzwGi15+Nnz74alZ/kpHiw+x7heq7d+wkvPbQkeqVy0Pq/+0bFZSvLz349mDshG2ucJq84dRg==
+   eJztlzEPwiAQhdGN0dHR0dHR0dHR0dHR0Z/hvxaSEp8vBxwUYq19yUvs1cD1vj6ixixatGhq2jpb5yvU/PVu+PxwXkHd0vcsfL7DmrjereI6rI31ucqCz85ruu+vL+bNpETbYc0eCpzmxMg/01owKtSQic+JjRhzIfFd9Ck+Z3JCTtqcIIvWPDbm8wztraeR37sW+2MetOLsxHIi5aI1j01mXd/HSqjndHTewx48e+kMqT3DS/PAKulFYjGGR24usV6DcM5GUcc1NC5lUpMHbX/cS4xFj721PDRiNiU8NEzG5oGl6SXF4ls8TnQvlYmSPWNz4CxLPbWQppcUi6nmI8anhkeLZw7//XJu1V8Ps6S6Nhe8Rk8efvb8uyH3Tv+CY7NMic8xrrfqLfWOz2H2pTxyueh9Xv2jY7OU5Od/GMwckI20zwsDsB2c
   </data>
  </layer>
  <objectgroup name="Powerups">
