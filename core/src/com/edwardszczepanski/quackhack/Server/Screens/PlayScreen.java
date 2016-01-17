@@ -258,7 +258,6 @@ public class PlayScreen implements Screen, NetListener {
 	public void netPlayerConnected(Integer id) {
 		if(!isGoing) {
 			players.put(id, new Player(id, world, this, PlayerType.snake));
-			game.getServer().sendCommand(id, NetCommand.PLAYER_JOIN);
 		}
 	}
 

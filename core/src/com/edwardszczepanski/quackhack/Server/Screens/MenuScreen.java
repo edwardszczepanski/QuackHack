@@ -65,6 +65,7 @@ public class MenuScreen implements Screen {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 72;
+
         font = generator.generateFont(parameter);
 
         heading = new Label("QuackHack", new Label.LabelStyle(font, Color.WHITE));

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.edwardszczepanski.quackhack.Client.Screens.LobbyScreen;
 import com.edwardszczepanski.quackhack.Net.NetClient;
 import com.edwardszczepanski.quackhack.Net.NetServer;
 import com.edwardszczepanski.quackhack.Server.Screens.ServerLobbyScreen;
@@ -42,7 +43,9 @@ public class QuackHack extends Game {
 		} else {
 			// Run client
 			client = new NetClient();
-			setScreen(new com.edwardszczepanski.quackhack.Client.Screens.ControlScreen(game));
+
+			setScreen(new LobbyScreen(game));
+
 		}
 	}
 

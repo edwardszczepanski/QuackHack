@@ -34,7 +34,7 @@ public class NetServer {
 					Update request = (Update)object;
 					int id = connection.getID();
 					
-					System.out.println("command :: id: "+id + " cmd: "+ request.cmd.toString());
+					System.out.println("command :: id: "+id + " cmd: "+ request.cmd.toString() + " type: "+request.type.toString());
 
 					switch(request.cmd) {
 					case PLAYER_CONNECTED:
