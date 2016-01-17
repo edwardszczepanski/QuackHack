@@ -1,5 +1,5 @@
 spritePack.png
-size: 128, 128
+size: 1680, 663
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -8,5 +8,75 @@ boxCrate_double
   xy: 0, 0
   size: 128, 128
   orig: 128, 128
+  offset: 0, 0
+  index: -1
+parrot
+  rotate: false
+  xy: 128, 0
+  size: 284, 285
+  orig: 284, 285
+  offset: 0, 0
+  index: -1
+penguin
+  rotate: false
+  xy: 412, 0
+  size: 284, 285
+  orig: 284, 285
+  offset: 0, 0
+  index: -1
+pig
+  rotate: false
+  xy: 696, 0
+  size: 316, 285
+  orig: 316, 285
+  offset: 0, 0
+  index: -1
+panda
+  rotate: false
+  xy: 1012, 0
+  size: 332, 285
+  orig: 332, 285
+  offset: 0, 0
+  index: -1
+monkey
+  rotate: false
+  xy: 1344, 0
+  size: 336, 285
+  orig: 336, 285
+  offset: 0, 0
+  index: -1
+hippo
+  rotate: false
+  xy: 0, 285
+  size: 294, 293
+  orig: 294, 293
+  offset: 0, 0
+  index: -1
+elephant
+  rotate: false
+  xy: 294, 285
+  size: 376, 310
+  orig: 376, 310
+  offset: 0, 0
+  index: -1
+snake
+  rotate: false
+  xy: 670, 285
+  size: 284, 321
+  orig: 284, 321
+  offset: 0, 0
+  index: -1
+giraffe
+  rotate: false
+  xy: 954, 285
+  size: 334, 350
+  orig: 334, 350
+  offset: 0, 0
+  index: -1
+rabbit
+  rotate: false
+  xy: 1288, 285
+  size: 284, 370
+  orig: 284, 370
   offset: 0, 0
   index: -1

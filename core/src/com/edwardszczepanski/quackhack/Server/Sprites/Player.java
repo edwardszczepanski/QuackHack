@@ -30,11 +30,8 @@ public class Player extends Sprite{
 
 
     public Player (World world, PlayScreen screen){
-        super(Assets.getAtlas().findRegion("boxCrate_double"));
-
-        playerRegion = new TextureRegion(getTexture(), 0, 0, 128, 128);
         setBounds(0, 0, 128 / QuackHack.PPM, 128 / QuackHack.PPM);
-        setRegion(playerRegion);
+        setRegion(Assets.getAtlas().findRegion("snake"));
         setOrigin(getHeight() / 2, getWidth() / 2);
         
         this.world = world;
