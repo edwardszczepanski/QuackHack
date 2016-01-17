@@ -12,7 +12,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 public class NetClient {
 	private Client client = new Client();
-	private PlayerType type = PlayerType.rabbit;
+	private PlayerType type = PlayerType.snake;
 
 	public NetClient() {
 		Kryo kryo = this.client.getKryo();
@@ -34,7 +34,7 @@ public class NetClient {
 					}
 					if(client.isConnected()) {
 						System.out.println("Connected!");
-						
+
 						Update response = new Update();
 						response.cmd = NetCommand.PLAYER_CONNECTED;
 						client.sendTCP(response);
@@ -60,7 +60,7 @@ public class NetClient {
 		request.cmd = cmd;
 		client.sendTCP(request);
 	}
-	
+
 	public void setType(PlayerType type) {
 		this.type = type;
 	}

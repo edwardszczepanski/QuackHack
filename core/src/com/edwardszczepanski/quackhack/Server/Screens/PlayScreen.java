@@ -19,7 +19,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
-import com.edwardszczepanski.quackhack.Net.NetCommand;
 import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
 import com.edwardszczepanski.quackhack.Server.Sprites.Box;
@@ -80,8 +79,8 @@ public class PlayScreen implements Screen, NetListener {
         rayHandler = rayHandlerGenerator();
 
 		for(Connection c: game.getServer().getPlayers()) {
-			System.out.println("New Player! id: "+c.getID());
-			players.put(c.getID(), new Player(c.getID(), world, this, PlayerType.snake));
+			System.out.println("New Player! id: "+game.getServer().getPlayerType(c.getID()).toString());
+			players.put(c.getID(), new Player(c.getID(), world, this, game.getServer().getPlayerType(c.getID())));
 		}
 	}
 
@@ -255,9 +254,10 @@ public class PlayScreen implements Screen, NetListener {
 	public void netPlayerDied(Integer id) {}
 
 	@Override
-	public void netPlayerConnected(Integer id) {
+	public void netPlayerConnected(Integer id, PlayerType type) {
+		System.out.println(type.toString());
 		if(!isGoing) {
-			players.put(id, new Player(id, world, this, PlayerType.snake));
+			players.put(id, new Player(id, world, this, type));
 		}
 	}
 
@@ -266,5 +266,10 @@ public class PlayScreen implements Screen, NetListener {
 	
 	public void reset() {
 		game.setScreen(new PlayScreen(game));
+	}
+
+	@Override
+	public void netPlayerType(int id, PlayerType type) {
+		//players.get(id).setType(type);
 	}
 }

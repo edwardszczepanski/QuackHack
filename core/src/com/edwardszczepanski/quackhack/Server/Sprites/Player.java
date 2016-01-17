@@ -26,9 +26,12 @@ public class Player extends Sprite{
     private boolean isGoing;
     private PointLight pointLight;
     private Integer id;
+    private PlayerType type;
 
 
     public Player (Integer id, World world, PlayScreen screen, PlayerType type){
+    	this.type = type;
+    	System.out.println("t: "+type.toString());
         setBounds(0, 0, 128 / QuackHack.PPM, 128 / QuackHack.PPM);
         setRegion(Assets.getAtlas().findRegion(type.toString()));
         setOrigin(getHeight() / 2, getWidth() / 2);
