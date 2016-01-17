@@ -108,12 +108,25 @@ public class PlayScreen implements Screen, NetListener {
 
 		world.step(1 / 60f, 6, 2);
 		
+		float minX = 999999;
+
 		for(Player player: players.values()) {
 			maxX = Math.max(maxX, player.b2body.getPosition().x);
+			minX = Math.min(minX, player.b2body.getPosition().x);
 		}
 		
-		gamecam.position.x = maxX;
+		float newWidth = (maxX-minX)*2;
+		float centerX = maxX-(newWidth/4);
+		
+		if(newWidth < gamecam.viewportWidth) {
+			newWidth = gamecam.viewportWidth;
+		}
+		
+		gamecam.zoom = (newWidth/gamecam.viewportWidth);
+		gamecam.position.x = centerX;
 		gamecam.update();
+		
+		
 		renderer.setView(gamecam);
         rayHandler.update();
 	}

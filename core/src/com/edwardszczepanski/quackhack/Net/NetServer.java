@@ -13,6 +13,13 @@ public class NetServer {
 	private Array<Integer> players = new Array<Integer>();
 	private Array<NetListener> listeners = new Array<NetListener>();
 	private int currentId = 0;
+	
+	private int nextId() {
+		int i = currentId;
+		currentId += 1;
+		System.out.println(currentId);
+		return currentId;
+	}
 
 	public NetServer() {
 		Kryo kryo = server.getKryo();
@@ -33,7 +40,7 @@ public class NetServer {
 				if (object instanceof Update) {
 					Update request = (Update)object;
 					if(request.id == -1) {
-						request.id = currentId++;
+						request.id = nextId();
 						System.out.println("New Connection! id: "+request.id);
 					}
 					
