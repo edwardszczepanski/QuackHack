@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="20" tilewidth="128" tileheight="128" nextobjectid="333">
- <tileset firstgid="1" name="Kenny" tilewidth="128" tileheight="128" tilecount="128" columns="8">
+ <tileset firstgid="1" name="Kenny" tilewidth="128" tileheight="128" tilecount="128">
   <image source="spritesheet_ground.png" width="1024" height="2048"/>
  </tileset>
- <tileset firstgid="129" name="Kenny Object" tilewidth="128" tileheight="128" tilecount="32" columns="8">
+ <tileset firstgid="129" name="Kenny Object" tilewidth="128" tileheight="128" tilecount="32">
   <image source="spritesheet_items.png" width="1024" height="512"/>
  </tileset>
- <tileset firstgid="161" name="Die/Speed Bump" tilewidth="128" tileheight="128" tilecount="128" columns="8">
+ <tileset firstgid="161" name="Die/Speed Bump" tilewidth="128" tileheight="128" tilecount="128">
   <image source="spritesheet_tiles.png" width="1024" height="2048"/>
  </tileset>
  <layer name="Graphics" width="200" height="20">

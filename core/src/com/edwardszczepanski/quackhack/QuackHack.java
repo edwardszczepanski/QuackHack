@@ -49,7 +49,6 @@ public class QuackHack extends Game {
 			client = new NetClient();
 
 			setScreen(new ControlScreen(game));
-
 		}
 	}
 
