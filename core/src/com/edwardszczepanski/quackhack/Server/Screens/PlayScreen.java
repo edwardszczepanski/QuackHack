@@ -37,7 +37,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	// Sprites
 	private HashMap<Integer, Player> players = new HashMap<Integer, Player>();
-	private BitmapFont font12;
 
 	// Tiled Map Variables
 	private TmxMapLoader maploader;
@@ -184,5 +183,4 @@ public class PlayScreen implements Screen, NetListener {
 		System.out.println("Stop!");
 		players.get(id).isGoing(false);
 	}
-
 }

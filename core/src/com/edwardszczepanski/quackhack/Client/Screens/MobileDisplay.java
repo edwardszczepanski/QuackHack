@@ -1,35 +1,29 @@
 package com.edwardszczepanski.quackhack.Client.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Net.NetCommand;
+import com.edwardszczepanski.quackhack.QuackHack;
 
 /**
- * Created by edwardszc on 1/15/16.
+ * Created by edwardszc on 1/16/16.
  */
-public class MenuScreen implements Screen {
-    private OrthographicCamera gamecam;
-    private ExtendViewport gamePort;
-
-    private QuackHack game;
-    private Stage stage;
+public class MobileDisplay implements Disposable{
+    public Stage stage;
     private Table table;
     private TextButton buttonPlay, buttonExit;
     private Label heading;
@@ -37,24 +31,9 @@ public class MenuScreen implements Screen {
     private BitmapFont white, black;
     private TextureAtlas atlas;
 
-    public MenuScreen(QuackHack game){
-        this.game = game;
-    }
+    public MobileDisplay(final QuackHack game){
 
-    public void handleInput(float delta){
-        //if (Gdx.input.isTouched() && )
-    }
-
-    public void update(float delta){
-        handleInput(delta);
-    }
-
-    @Override
-    public void show() {
-        gamecam = new OrthographicCamera();
-        gamePort = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), gamecam);
-
-        stage = new Stage(gamePort, game.batch);
+        stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         atlas = new TextureAtlas("font/atlas.pack");
@@ -78,13 +57,13 @@ public class MenuScreen implements Screen {
         buttonExit.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("lol");
+                System.out.println("lolDown");
                 game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
-				return true;
+                return true;
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("lol");
+                System.out.println("lolUp");
                 game.getClient().sendCommand(NetCommand.END_MOVE);
             }
         });
@@ -95,8 +74,8 @@ public class MenuScreen implements Screen {
         buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("lol");
-                game.getClient().sendCommand(NetCommand.JUMP);
+                System.out.println("lolClicked");
+                //game.getClient().sendCommand(NetCommand.JUMP);
             }
         });
         buttonPlay.pad(20);
@@ -116,40 +95,6 @@ public class MenuScreen implements Screen {
         table.add(buttonExit);
         table.debug(); // This enables all the debug lines
         stage.addActor(table);
-    }
-
-    @Override
-    public void render(float delta) {
-        update(delta);
-        Gdx.gl.glClearColor(0, 0, 0, 1); // Color then opacity
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act(delta);
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        gamePort.update(width, height);
-        gamecam.update();
-
-        stage.setViewport(gamePort);
-        table.invalidateHierarchy();
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     @Override
