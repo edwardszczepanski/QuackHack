@@ -1,6 +1,7 @@
 package com.edwardszczepanski.quackhack.Client.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,9 +20,14 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.Net.NetCommand;
 import com.edwardszczepanski.quackhack.QuackHack;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by edwardszc on 1/16/16.
  */
+
+
 public class MobileDisplay implements Disposable{
     public Stage stage;
     private Table table;
@@ -34,7 +40,9 @@ public class MobileDisplay implements Disposable{
     public MobileDisplay(final QuackHack game){
 
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+
+
+
 
         atlas = new TextureAtlas("font/atlas.pack");
         skin = new Skin(Gdx.files.internal("font/menuSkin.json"), new TextureAtlas("font/atlas.pack"));
@@ -53,8 +61,8 @@ public class MobileDisplay implements Disposable{
         textButtonStyle.pressedOffsetY = -1;
         textButtonStyle.font = black;
 
-        buttonExit = new TextButton("EXIT", textButtonStyle);
-        buttonExit.addListener(new ClickListener() {
+        buttonExit = new TextButton("RUN", textButtonStyle);
+        /*buttonExit.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("lolDown");
@@ -66,19 +74,19 @@ public class MobileDisplay implements Disposable{
                 System.out.println("lolUp");
                 game.getClient().sendCommand(NetCommand.END_MOVE);
             }
-        });
+        });*/
 
-        buttonExit.pad(20);
+        buttonExit.pad(300);
 
-        buttonPlay = new TextButton("PLAY", textButtonStyle);
-        buttonPlay.addListener(new ClickListener() {
+        buttonPlay = new TextButton("JUMP", textButtonStyle);
+        /*buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("lolClicked");
                 game.getClient().sendCommand(NetCommand.JUMP);
             }
-        });
-        buttonPlay.pad(20);
+        });*/
+        buttonPlay.pad(300);
 
         // Creating heading
         heading = new Label("QuackHack", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/white64.fnt"), false), Color.WHITE));
@@ -89,14 +97,16 @@ public class MobileDisplay implements Disposable{
         table.row();
         table.add(buttonPlay);
         table.getCell(buttonPlay).spaceBottom(15);
-        table.row();
         table.add(buttonExit);
         table.debug(); // This enables all the debug lines
         stage.addActor(table);
+
+
     }
 
     @Override
     public void dispose() {
 
     }
+
 }
