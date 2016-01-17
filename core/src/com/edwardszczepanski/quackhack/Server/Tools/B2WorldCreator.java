@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Server.Sprites.Box;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -59,16 +60,7 @@ public class B2WorldCreator {
 		}
 		
 		for(MapObject object: map.getLayers().get("Dynamic").getObjects().getByType(RectangleMapObject.class)){
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
-			bdef.type = BodyDef.BodyType.DynamicBody;
-			bdef.position.set((rect.getX()+rect.getWidth()/2)/ QuackHack.PPM, (rect.getY() + rect.getHeight()/2)/QuackHack.PPM); // I don't follow the math
-			body = world.createBody(bdef);
-
-			shape.setAsBox(rect.getWidth() / 2 / QuackHack.PPM, rect.getHeight() / 2 / QuackHack.PPM);
-			fdef.shape = shape;
-			fdef.friction = 0.4f;
-			body.createFixture(fdef);
+			new Box(world, object);
 		}
 	}
 

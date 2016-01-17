@@ -76,8 +76,6 @@ public class PlayScreen implements Screen, NetListener {
 
 		for(Integer id: game.getServer().getPlayers()) {
 			players.put(id, new Player(world, this));
-			isGoing = true;
-
 		}
 	}
 
@@ -88,7 +86,6 @@ public class PlayScreen implements Screen, NetListener {
         localRay.setShadows(true);
         return localRay;
     }
-
 
 	public void update(float delta) {
 		for(Player player: players.values()) {
@@ -208,7 +205,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netPlayerConnected(Integer id) {
-		isGoing = true;
 		players.put(id, new Player(world, this));
 	}
 
