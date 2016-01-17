@@ -5,10 +5,10 @@ import java.util.HashMap;
 import box2dLight.RayHandler;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -29,7 +29,6 @@ import com.edwardszczepanski.quackhack.Server.Tools.WorldContactListener;
 
 public class PlayScreen implements Screen, NetListener {
 	private QuackHack game;
-	private TextureAtlas atlas;
 
 	private OrthographicCamera gamecam;
 	private ExtendViewport gamePort;
@@ -55,7 +54,6 @@ public class PlayScreen implements Screen, NetListener {
 	private float maxX = 0;
 
 	public PlayScreen(QuackHack game) {
-		atlas = new TextureAtlas("sheet.txt");
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(QuackHack.V_WIDTH * 4 / QuackHack.PPM, QuackHack.V_HEIGHT * 4 / QuackHack.PPM, gamecam);
@@ -76,8 +74,6 @@ public class PlayScreen implements Screen, NetListener {
 
 		for(Integer id: game.getServer().getPlayers()) {
 			players.put(id, new Player(world, this));
-			isGoing = true;
-
 		}
 	}
 
@@ -92,7 +88,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	public void update(float delta) {
 		for(Player player: players.values()) {
-			System.out.println(player.b2body.getLinearVelocity().x);
 			player.update(delta);
 			if(isGoing) {
 				if(player.b2body.getLinearVelocity().x < 8){
@@ -101,6 +96,10 @@ public class PlayScreen implements Screen, NetListener {
                 	player.b2body.applyForce(new Vector2(-2f, 0), player.b2body.getWorldCenter(), true);
                 }
 			}
+		}
+		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			this.reset();
 		}
 
 		hud.update(delta);
@@ -157,10 +156,6 @@ public class PlayScreen implements Screen, NetListener {
 		gamePort.update(width, height);
 	}
 
-	public TextureAtlas getAtlas() {
-		return atlas;
-	}
-
 	@Override
 	public void dispose() {
 		map.dispose();
@@ -187,12 +182,11 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void hide() {
-
 	}
 
 	@Override
 	public void netJump(Integer id) {
-        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 20f), players.get(id).b2body.getWorldCenter(), true);
+        players.get(id).b2body.applyLinearImpulse(new Vector2(0, 30f), players.get(id).b2body.getWorldCenter(), true);
 	}
 
 	@Override
@@ -208,7 +202,6 @@ public class PlayScreen implements Screen, NetListener {
 
 	@Override
 	public void netPlayerConnected(Integer id) {
-		isGoing = true;
 		players.put(id, new Player(world, this));
 	}
 
@@ -221,5 +214,9 @@ public class PlayScreen implements Screen, NetListener {
 	@Override
 	public void netEndMove(Integer id) {
 		players.get(id).isGoing(false);
+	}
+	
+	public void reset() {
+		game.setScreen(new PlayScreen(game));
 	}
 }

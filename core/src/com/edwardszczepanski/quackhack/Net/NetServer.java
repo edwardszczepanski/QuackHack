@@ -2,7 +2,6 @@ package com.edwardszczepanski.quackhack.Net;
 
 import java.io.IOException;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -13,6 +12,7 @@ public class NetServer {
 	private Server server = new Server();
 	private Array<Integer> players = new Array<Integer>();
 	private Array<NetListener> listeners = new Array<NetListener>();
+	private int currentId = 0;
 
 	public NetServer() {
 		Kryo kryo = server.getKryo();
@@ -33,7 +33,7 @@ public class NetServer {
 				if (object instanceof Update) {
 					Update request = (Update)object;
 					if(request.id == -1) {
-						request.id = server.getConnections().length - 1;
+						request.id = currentId++;
 						System.out.println("New Connection! id: "+request.id);
 					}
 					
@@ -43,6 +43,11 @@ public class NetServer {
 					case PLAYER_CONNECTED:
 						players.add(request.id);
 						System.out.println("players: "+players.size);
+						
+						Update response = new Update();
+						response.id = request.id;
+						response.cmd = NetCommand.PING;
+						connection.sendTCP(response);
 
 						for(NetListener listener: listeners) {
 							listener.netPlayerConnected(request.id);
@@ -80,11 +85,6 @@ public class NetServer {
 						}
 						break;
 					}
-					
-					Update response = new Update();
-					response.id = request.id;
-					response.cmd = NetCommand.PING;
-					connection.sendTCP(response);
 				}
 			}
 		});

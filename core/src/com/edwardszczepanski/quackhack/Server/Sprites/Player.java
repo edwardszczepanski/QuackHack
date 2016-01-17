@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.edwardszczepanski.quackhack.QuackHack;
 import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
+import com.edwardszczepanski.quackhack.Server.Tools.Assets;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -27,7 +28,7 @@ public class Player extends Sprite{
 
 
     public Player (World world, PlayScreen screen){
-        super(screen.getAtlas().findRegion("duck_standing"));
+        super(Assets.getAtlas().findRegion("duck_standing"));
         
         this.world = world;
         touchingGround = false;

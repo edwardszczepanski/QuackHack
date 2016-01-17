@@ -57,4 +57,11 @@ public class QuackHack extends Game {
 	public NetServer getServer() {
 		return server;
 	}
+	
+	public QuackHack getInstance() {
+		if(game == null) {
+			game = new QuackHack();
+		}
+		return game;
+	}
 }

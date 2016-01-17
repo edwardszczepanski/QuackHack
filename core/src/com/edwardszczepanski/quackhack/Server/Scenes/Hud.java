@@ -24,6 +24,7 @@ public class Hud implements Disposable {
     private Integer worldTimer;
     private float timeCount;
     private static Integer score;
+    private QuackHack game;
     // Now we create our widgets. Our widgets will be labels, essentially text, that allow us to display Game Information
 
     private Label countdownLabel;
@@ -32,11 +33,12 @@ public class Hud implements Disposable {
     private Label playerLabel;
 
     public Hud(QuackHack game){
+    	this.game = game;
         worldTimer = 10;
         timeCount = 0;
         score = 0;
 
-        viewport = new ExtendViewport(960, 640, new OrthographicCamera());
+        viewport = new ExtendViewport(960*4, 640*4, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
 
         Table table = new Table();
@@ -47,13 +49,13 @@ public class Hud implements Disposable {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
 
-        parameter.size = 150;
+        parameter.size = 150*4;
         countdownLabel = new Label(String.format("%d", worldTimer), new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
-        parameter.size = 24;
+        parameter.size = 24*4;
         timeLabel = new Label("GAME START IN ", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
-        parameter.size = 80;
+        parameter.size = 80*4;
         nameLabel = new Label("INFERNO DUCKS", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
-        parameter.size = 30;
+        parameter.size = 30*4;
         playerLabel = new Label(String.format("%d ", game.getServer().getPlayers().size) + " PLAYERS WAITING", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
 
         table.add(nameLabel).expandX().padTop(100);
@@ -85,6 +87,7 @@ public class Hud implements Disposable {
             }
             timeCount = 0;
         }
+        playerLabel.setText(String.format("%d ", game.getServer().getPlayers().size) + " PLAYERS WAITING");
     }
     public int getTime(){
         return worldTimer;
