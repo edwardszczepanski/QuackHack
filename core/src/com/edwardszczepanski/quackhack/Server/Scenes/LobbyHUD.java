@@ -58,7 +58,7 @@ public class LobbyHUD implements Disposable {
         parameter.size = 30*4;
         playerLabel = new Label(String.format("%d ", game.getServer().getPlayers().length) + "  PLAYERS WAITING", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
 
-        table.add(nameLabel).expandX().padTop(100);
+        table.add(nameLabel).expandX().padTop(450);
         table.row();
         table.add(timeLabel).expandX().padTop(55);
         table.row();

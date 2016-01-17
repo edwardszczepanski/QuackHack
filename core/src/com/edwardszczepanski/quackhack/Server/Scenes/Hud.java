@@ -34,7 +34,7 @@ public class Hud implements Disposable {
 
     public Hud(QuackHack game){
     	this.game = game;
-        worldTimer = 10;
+        worldTimer = 11;
         timeCount = 0;
         score = 0;
 
@@ -54,11 +54,11 @@ public class Hud implements Disposable {
         parameter.size = 24*4;
         timeLabel = new Label("GAME STARTS IN ", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
         parameter.size = 80*4;
-        nameLabel = new Label("INFERNO DUCKS", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
+        nameLabel = new Label("INFERNO   DUCKS", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
         parameter.size = 30*4;
         playerLabel = new Label(String.format("%d ", game.getServer().getPlayers().length) + "  PLAYERS WAITING", new Label.LabelStyle(generator.generateFont(parameter), Color.WHITE));
 
-        table.add(nameLabel).expandX().padTop(100);
+        table.add(nameLabel).expandX().padTop(450);
         table.row();
         table.add(timeLabel).expandX().padTop(55);
         table.row();
