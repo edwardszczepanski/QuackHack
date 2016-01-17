@@ -62,30 +62,11 @@ public class MobileDisplay implements Disposable{
         textButtonStyle.font = black;
 
         buttonExit = new TextButton("RUN", textButtonStyle);
-        /*buttonExit.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("lolDown");
-                game.getClient().sendCommand(NetCommand.MOVE_RIGHT);
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("lolUp");
-                game.getClient().sendCommand(NetCommand.END_MOVE);
-            }
-        });*/
 
         buttonExit.pad(300);
 
         buttonPlay = new TextButton("JUMP", textButtonStyle);
-        /*buttonPlay.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("lolClicked");
-                game.getClient().sendCommand(NetCommand.JUMP);
-            }
-        });*/
+
         buttonPlay.pad(300);
 
         // Creating heading

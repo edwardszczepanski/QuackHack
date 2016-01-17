@@ -20,14 +20,8 @@ public class WorldContactListener implements ContactListener {
 		Fixture fixB = contact.getFixtureB();
 
 		if (fixA.getUserData() instanceof Player || fixB.getUserData() instanceof Player) {
-			Fixture obj1 = fixA.getUserData() instanceof UserData ? fixA : fixB;
-			if(obj1 != null) {
-				if(((UserData) obj1.getUserData()).name == "foot") {
-					((UserData) obj1.getUserData()).player.setTouching(true);
-				} else if(((UserData) obj1.getUserData()).name == "right") {
-					((UserData) obj1.getUserData()).player.setClimbing(true);
-				}
-			}
+			Fixture objA = fixA.getUserData() instanceof Player ? fixA : fixB;
+            ((Player) objA.getUserData()).setTouching(true);
 		}
 	}
 
@@ -35,16 +29,11 @@ public class WorldContactListener implements ContactListener {
 	public void endContact(Contact contact) {
 		Fixture fixA = contact.getFixtureA();
 		Fixture fixB = contact.getFixtureB();
-		if (fixA.getUserData() instanceof UserData || fixB.getUserData() instanceof UserData) {
-			Fixture obj1 = fixA.getUserData() instanceof UserData ? fixA : fixB;
-			if(obj1 != null) {
-				if(((UserData) obj1.getUserData()).name == "foot") {
-					((UserData) obj1.getUserData()).player.setTouching(false);
-				} else if(((UserData) obj1.getUserData()).name == "right") {
-					((UserData) obj1.getUserData()).player.setClimbing(false);
-				}
-			}
-		}
+
+        if (fixA.getUserData() instanceof Player || fixB.getUserData() instanceof Player) {
+            Fixture objA = fixA.getUserData() instanceof Player ? fixA : fixB;
+            ((Player) objA.getUserData()).setTouching(false);
+        }
 
 	}
 

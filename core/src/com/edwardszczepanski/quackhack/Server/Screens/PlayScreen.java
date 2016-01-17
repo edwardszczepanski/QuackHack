@@ -107,6 +107,7 @@ public class PlayScreen implements Screen, NetListener {
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
 		for(Player player: players.values()) {
+            System.out.println(player.getTouching());
 			player.draw(game.batch);
 		}
 		game.batch.end();
