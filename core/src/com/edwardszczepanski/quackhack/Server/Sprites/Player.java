@@ -91,5 +91,4 @@ public class Player extends Sprite{
     public boolean isGoing() {
     	return isGoing;
     }
-
 }

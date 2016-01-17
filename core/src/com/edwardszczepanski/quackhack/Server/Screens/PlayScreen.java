@@ -125,7 +125,7 @@ public class PlayScreen implements Screen, NetListener {
 		}
 		
 		float newWidth = (maxX-minX)*1.5f;
-		float centerX = maxX-(newWidth*0.25f);
+		float centerX = maxX-Math.min(gamecam.viewportWidth*0.75f, newWidth*0.25f);
 		
 		if(newWidth < gamecam.viewportWidth) {
 			newWidth = gamecam.viewportWidth;
