@@ -2,6 +2,7 @@ package com.edwardszczepanski.quackhack.Server.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,6 +37,7 @@ public class MenuScreen implements Screen {
     private BitmapFont white, black;
     private TextureAtlas atlas;
     private BitmapFont font;
+    private Music menuMusic;
 
     public MenuScreen(QuackHack game){
         this.game = game;
@@ -61,6 +63,9 @@ public class MenuScreen implements Screen {
         skin = new Skin(Gdx.files.internal("font/menuSkin.json"), new TextureAtlas("font/atlas.pack"));
         table = new Table(skin);
         table.setBounds(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("App Menu.wav"));
+        menuMusic.setLooping(true);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -148,6 +153,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        menuMusic.dispose();
     }
 }

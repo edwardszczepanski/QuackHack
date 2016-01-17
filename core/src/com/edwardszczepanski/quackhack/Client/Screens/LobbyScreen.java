@@ -27,56 +27,58 @@ public class LobbyScreen implements Screen {
             if(Gdx.input.getY() < Gdx.graphics.getHeight() /2){ // This is on the top row
                 if(Gdx.input.getX() > 4*Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.panda);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: PANDA");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: PANDA");
                 }
                 else if (Gdx.input.getX() > 3*Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.monkey);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: MONKEY");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: MONKEY");
                 }
                 else if (Gdx.input.getX() > 2*Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.hippo);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: HIPPO");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: HIPPO");
                 }
                 else if (Gdx.input.getX() > Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.giraffe);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: GIRAFFE");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: GIRAFFE");
                 }
                 else{
                 	game.getClient().setType(PlayerType.elephant);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: ELEPHANT");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: ELEPHANT");
+
                 }
             }
             else{
                 if(Gdx.input.getX() > 4*Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.snake);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: SNAKE");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: SNAKE");
                 }
                 else if (Gdx.input.getX() > 3*Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.rabbit);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: RABBIT");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: RABBIT");
                 }
                 else if (Gdx.input.getX() > 2*Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.pig);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: PIG");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: PIG");
                 }
                 else if (Gdx.input.getX() > Gdx.graphics.getWidth()/5){
                 	game.getClient().setType(PlayerType.penguin);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: PENGUIN");
+
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: PENGUIN");
                 }
                 else{
                     System.out.println(6);
                 	game.getClient().setType(PlayerType.parrot);
-                    game.getClient().sendCommand(NetCommand.PING);
-                    hud.heading.setText("CHOOSE CHARACTER. CURRENT: ELEPHANT");
+                    game.getClient().sendCommand(NetCommand.PLAYER_TYPE);
+                    hud.heading.setText("CHOOSE CHARACTER  CURRENT: PARROT");
                 }
             }
         }

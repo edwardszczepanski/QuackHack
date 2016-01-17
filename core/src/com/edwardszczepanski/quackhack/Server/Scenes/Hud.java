@@ -34,7 +34,7 @@ public class Hud implements Disposable {
 
     public Hud(QuackHack game){
     	this.game = game;
-        worldTimer = 11;
+        worldTimer = 10;
         timeCount = 0;
         score = 0;
 

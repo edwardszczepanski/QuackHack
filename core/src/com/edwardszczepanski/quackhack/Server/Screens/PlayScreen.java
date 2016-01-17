@@ -10,6 +10,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -19,9 +21,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
-import com.edwardszczepanski.quackhack.Net.NetCommand;
 import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
+import com.edwardszczepanski.quackhack.Server.Scenes.ParallaxBackground;
+import com.edwardszczepanski.quackhack.Server.Scenes.ParallaxLayer;
 import com.edwardszczepanski.quackhack.Server.Sprites.Box;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player.PlayerType;
@@ -59,8 +62,9 @@ public class PlayScreen implements Screen, NetListener {
 	private Box2DDebugRenderer b2dr;
 	
 	private float maxX = 0;
+    public ParallaxBackground rbg;
 
-	public PlayScreen(QuackHack game) {
+    public PlayScreen(QuackHack game) {
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(QuackHack.V_WIDTH * 4 / QuackHack.PPM, QuackHack.V_HEIGHT * 4 / QuackHack.PPM, gamecam);
@@ -80,9 +84,18 @@ public class PlayScreen implements Screen, NetListener {
         rayHandler = rayHandlerGenerator();
 
 		for(Connection c: game.getServer().getPlayers()) {
-			System.out.println("New Player! id: "+c.getID());
-			players.put(c.getID(), new Player(c.getID(), world, this, PlayerType.snake));
+			System.out.println("New Player! id: "+game.getServer().getPlayerType(c.getID()).toString());
+			players.put(c.getID(), new Player(c.getID(), world, this, game.getServer().getPlayerType(c.getID())));
 		}
+        //TextureRegion bg = new TextureRegion(new Texture(Gdx.files.internal("blue_grass.png")));
+
+
+        //http://www.badlogicgames.com/forum/viewtopic.php?f=17&t=1795
+        rbg = new ParallaxBackground(new ParallaxLayer[]{
+                new ParallaxLayer(new TextureRegion(new Texture(Gdx.files.internal("blue_grass.png"))),new Vector2(0.5f, 0.5f),new Vector2(0, 300)),
+                //new ParallaxLayer(atlas.findRegion("bg2"),new Vector2(1.0f,1.0f),new Vector2(0, 500)),
+        }, 800, 480,new Vector2(150,0));
+
 	}
 
     public RayHandler rayHandlerGenerator(){
@@ -148,8 +161,8 @@ public class PlayScreen implements Screen, NetListener {
 		Array<Integer> des = new Array<Integer>();
 		
 		for(Player player: players.values()) {
-			if(camEdge-(player.getWidth()*2) > player.getX() || player.getY() < -player.getHeight()) {
-				des.add(player.getId());
+			if(camEdge - (player.getWidth()*2) > player.getX() || player.getY() < -player.getHeight()) {
+                des.add(player.getId());
 			}
 		}
 		for(Integer p: des) {
@@ -158,7 +171,7 @@ public class PlayScreen implements Screen, NetListener {
 		if(players.isEmpty()) {
 			reset();
 		}
-		
+
 		
 		
 		renderer.setView(gamecam);
@@ -170,6 +183,8 @@ public class PlayScreen implements Screen, NetListener {
 		update(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        rbg.render(delta);
 
 		// This is going to render the map
 		renderer.render();
@@ -255,9 +270,10 @@ public class PlayScreen implements Screen, NetListener {
 	public void netPlayerDied(Integer id) {}
 
 	@Override
-	public void netPlayerConnected(Integer id) {
+	public void netPlayerConnected(Integer id, PlayerType type) {
+		System.out.println(type.toString());
 		if(!isGoing) {
-			players.put(id, new Player(id, world, this, PlayerType.snake));
+			players.put(id, new Player(id, world, this, type));
 		}
 	}
 
@@ -266,5 +282,10 @@ public class PlayScreen implements Screen, NetListener {
 	
 	public void reset() {
 		game.setScreen(new PlayScreen(game));
+	}
+
+	@Override
+	public void netPlayerType(int id, PlayerType type) {
+		//players.get(id).setType(type);
 	}
 }

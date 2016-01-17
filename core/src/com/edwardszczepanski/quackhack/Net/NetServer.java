@@ -1,6 +1,7 @@
 package com.edwardszczepanski.quackhack.Net;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.badlogic.gdx.utils.Array;
 import com.edwardszczepanski.quackhack.Server.Sprites.Player.PlayerType;
@@ -11,7 +12,8 @@ import com.esotericsoftware.kryonet.Server;
 
 public class NetServer {
 	private Server server = new Server();
-	private Array<NetListener> listeners = new Array<NetListener>();	
+	private Array<NetListener> listeners = new Array<NetListener>();
+	private HashMap<Integer, PlayerType> playerTypes = new HashMap<Integer, PlayerType>();
 
 	public NetServer() {
 		Kryo kryo = server.getKryo();
@@ -39,13 +41,14 @@ public class NetServer {
 					switch(request.cmd) {
 					case PLAYER_CONNECTED:
 						System.out.println("players: "+server.getConnections().length);
+						playerTypes.put(id, request.type);
 						
 						Update response = new Update();
 						response.cmd = NetCommand.PING;
 						connection.sendTCP(response);
 
 						for(NetListener listener: listeners) {
-							listener.netPlayerConnected(id);
+							listener.netPlayerConnected(id, request.type);
 						}
 						break;
 					case PLAYER_DISCONNECTED:
@@ -55,8 +58,16 @@ public class NetServer {
 						break;
 						
 					case PLAYER_JOIN:
+						playerTypes.put(id, request.type);
 						for(NetListener listener: listeners) {
 							listener.netPlayerJoin(id);
+						}
+						break;
+						
+					case PLAYER_TYPE:
+						playerTypes.put(id, request.type);
+						for(NetListener listener: listeners) {
+							listener.netPlayerType(id, request.type);
 						}
 						break;
 						
@@ -95,5 +106,9 @@ public class NetServer {
 				break;
 			}
 		}
+	}
+	
+	public PlayerType getPlayerType(Integer id) {
+		return playerTypes.get(id);
 	}
 }
