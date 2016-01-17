@@ -2,6 +2,8 @@ package com.edwardszczepanski.quackhack.Server.Screens;
 
 import java.util.HashMap;
 
+import box2dLight.RayHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -43,6 +45,9 @@ public class PlayScreen implements Screen, NetListener {
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 
+    //Box2d Lights
+    public static RayHandler rayHandler;
+
 	//Box2d variables
 	private World world;
 	private Box2DDebugRenderer b2dr;
@@ -66,12 +71,22 @@ public class PlayScreen implements Screen, NetListener {
 		new B2WorldCreator(world, map);
 		world.setContactListener(new WorldContactListener());
 		game.getServer().registerNetListener(this);
-		
+
+        rayHandler = rayHandlerGenerator();
+
 		for(Integer id: game.getServer().getPlayers()) {
-			System.out.println(id);
 			players.put(id, new Player(world, this));
 		}
 	}
+
+    public RayHandler rayHandlerGenerator(){
+        RayHandler localRay = new RayHandler(world);
+        RayHandler.useDiffuseLight(true);
+        localRay.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
+        localRay.setShadows(true);
+        return localRay;
+    }
+
 
 	public void update(float delta) {
 		for(Player player: players.values()) {
@@ -90,6 +105,7 @@ public class PlayScreen implements Screen, NetListener {
 		gamecam.position.x = maxX;
 		gamecam.update();
 		renderer.setView(gamecam);
+        rayHandler.update();
 	}
 
 	@Override
@@ -111,6 +127,13 @@ public class PlayScreen implements Screen, NetListener {
 		}
 		game.batch.end();
 
+        rayHandler.setCombinedMatrix(gamecam.combined.cpy().scl(1),
+                gamecam.position.x, gamecam.position.y,
+                gamecam.viewportWidth * gamecam.zoom,
+                gamecam.viewportHeight * gamecam.zoom);
+
+        rayHandler.render();
+
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
 	}
@@ -118,7 +141,6 @@ public class PlayScreen implements Screen, NetListener {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-
 	}
 
 	public TextureAtlas getAtlas() {
