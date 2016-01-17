@@ -126,7 +126,7 @@ public class Player extends Sprite{
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(128 / QuackHack.PPM);
+        shape.setRadius(64 / QuackHack.PPM);
 
         fdef.filter.categoryBits = QuackHack.MARIO_BIT;
         fdef.filter.maskBits = QuackHack.DEFAULT_BIT;

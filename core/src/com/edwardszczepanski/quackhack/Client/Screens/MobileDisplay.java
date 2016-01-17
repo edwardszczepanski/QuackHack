@@ -80,7 +80,6 @@ public class MobileDisplay implements Disposable{
         });
         buttonPlay.pad(20);
 
-
         // Creating heading
 
         heading = new Label("QuackHack", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/white64.fnt"), false), Color.WHITE));
