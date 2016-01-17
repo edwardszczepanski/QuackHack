@@ -20,7 +20,7 @@ public class NetServer {
 		kryo.register(Update.class);
 		kryo.register(NetCommand.class);
 		kryo.register(PlayerType.class);
-		
+
 		server.start();
 
 		try {
@@ -35,14 +35,14 @@ public class NetServer {
 				if (object instanceof Update) {
 					Update request = (Update)object;
 					int id = connection.getID();
-					
+
 					System.out.println("command :: id: "+id + " cmd: "+ request.cmd.toString() + " type: "+request.type.toString());
 
 					switch(request.cmd) {
 					case PLAYER_CONNECTED:
 						System.out.println("players: "+server.getConnections().length);
 						playerTypes.put(id, request.type);
-						
+
 						Update response = new Update();
 						response.cmd = NetCommand.PING;
 						connection.sendTCP(response);
@@ -56,21 +56,14 @@ public class NetServer {
 							listener.netPlayerDisconnected(id);
 						}
 						break;
-						
-					case PLAYER_JOIN:
-						playerTypes.put(id, request.type);
-						for(NetListener listener: listeners) {
-							listener.netPlayerJoin(id);
-						}
-						break;
-						
+
 					case PLAYER_TYPE:
 						playerTypes.put(id, request.type);
 						for(NetListener listener: listeners) {
 							listener.netPlayerType(id, request.type);
 						}
 						break;
-						
+
 					case JUMP:
 						for(NetListener listener: listeners) {
 							listener.netJump(id);
@@ -107,7 +100,13 @@ public class NetServer {
 			}
 		}
 	}
-	
+
+	public void sendCommand(NetCommand cmd) {
+		Update response = new Update();
+		response.cmd = cmd;
+		server.sendToAllTCP(response);
+	}
+
 	public PlayerType getPlayerType(Integer id) {
 		return playerTypes.get(id);
 	}

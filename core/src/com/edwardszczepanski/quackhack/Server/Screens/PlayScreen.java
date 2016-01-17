@@ -21,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.edwardszczepanski.quackhack.QuackHack;
+import com.edwardszczepanski.quackhack.Net.NetCommand;
 import com.edwardszczepanski.quackhack.Net.NetListener;
 import com.edwardszczepanski.quackhack.Server.Scenes.Hud;
 import com.edwardszczepanski.quackhack.Server.Scenes.ParallaxBackground;
@@ -112,7 +113,8 @@ public class PlayScreen implements Screen, NetListener {
 		}
 
 		hud.update(delta);
-        if(hud.getTime() == 0){
+        if(hud.getTime() == 0 && !isGoing){
+        	game.getServer().sendCommand(NetCommand.PLAYER_JOIN);
             isGoing = true;
         }
 
@@ -166,6 +168,7 @@ public class PlayScreen implements Screen, NetListener {
 			}
 		}
 		for(Integer p: des) {
+			game.getServer().sendCommand(p, NetCommand.PLAYER_DIED);
 			players.remove(p);
 		}
 		if(players.isEmpty()) {
