@@ -75,13 +75,12 @@ public class MobileDisplay implements Disposable{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("lolClicked");
-                //game.getClient().sendCommand(NetCommand.JUMP);
+                game.getClient().sendCommand(NetCommand.JUMP);
             }
         });
         buttonPlay.pad(20);
 
         // Creating heading
-
         heading = new Label("QuackHack", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/white64.fnt"), false), Color.WHITE));
 
         // Assembling
