@@ -47,20 +47,22 @@ public class PlayScreen implements Screen, NetListener {
 	//Box2d variables
 	private World world;
 	private Box2DDebugRenderer b2dr;
+	
+	private float maxX = 0;
 
 	public PlayScreen(QuackHack game) {
-		atlas = new TextureAtlas("mario_and_enemies.pack");
+		atlas = new TextureAtlas("sheet.txt");
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(QuackHack.V_WIDTH * 4 / QuackHack.PPM, QuackHack.V_HEIGHT * 4 / QuackHack.PPM, gamecam);
 		hud = new Hud(game.batch);
 		maploader = new TmxMapLoader();
 
-		map = maploader.load("level2.tmx");
+		map = maploader.load("BasicMap.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / QuackHack.PPM);
 
 		gamecam.position.set(gamePort.getMinWorldWidth() / 2, gamePort.getMinWorldHeight() / 2, 0);
-		world = new World(new Vector2(0, -10), true);
+		world = new World(new Vector2(0, -30), true);
 		b2dr = new Box2DDebugRenderer();
 		new B2WorldCreator(world, map);
 		world.setContactListener(new WorldContactListener());
@@ -70,15 +72,18 @@ public class PlayScreen implements Screen, NetListener {
 	public void update(float delta) {
 		for(Player player: players.values()) {
 			player.update(delta);
-			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 2) {
-				player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+			if(player.isGoing() && player.b2body.getLinearVelocity().x <= 8) {
+				player.b2body.setLinearVelocity(8, player.b2body.getLinearVelocity().y);
 			}
 		}
 		hud.update(delta);
 		world.step(1 / 60f, 6, 2);
+		
 		for(Player player: players.values()) {
-			gamecam.position.x = player.b2body.getPosition().x;
+			maxX = Math.max(maxX, player.b2body.getPosition().x);
 		}
+		
+		gamecam.position.x = maxX;
 		gamecam.update();
 		renderer.setView(gamecam);
 	}
@@ -148,7 +153,7 @@ public class PlayScreen implements Screen, NetListener {
 	@Override
 	public void netJump(Integer id) {
         if(players.get(id).getTouching()){
-            players.get(id).b2body.applyLinearImpulse(new Vector2(0, 4f), players.get(id).b2body.getWorldCenter(), true);
+            players.get(id).b2body.applyLinearImpulse(new Vector2(0, 10f), players.get(id).b2body.getWorldCenter(), true);
         }
 	}
 
