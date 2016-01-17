@@ -6,4 +6,5 @@ public enum NetCommand {
 	JUMP, PING,
 	
 	PLAYER_DIED, PLAYER_JOIN;
+	// goto lobby     goto game
 }

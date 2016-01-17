@@ -64,7 +64,6 @@ public class MenuScreen implements Screen {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/BEBAS.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.color.set(Color.BLACK);
         parameter.size = 32;
         font = generator.generateFont(parameter);
 
