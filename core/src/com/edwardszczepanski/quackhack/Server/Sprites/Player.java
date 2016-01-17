@@ -136,7 +136,7 @@ public class Player extends Sprite{
 
         // This is generating a head sensor
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-20 / QuackHack. PPM, 128 / QuackHack.PPM), new Vector2(20 / QuackHack. PPM, 128 / QuackHack.PPM));
+        head.set(new Vector2(-20 / QuackHack. PPM, 64 / QuackHack.PPM), new Vector2(20 / QuackHack. PPM, 128 / QuackHack.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("head");
