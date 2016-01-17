@@ -16,7 +16,6 @@ public class NetClient {
 	private PlayerType type = PlayerType.snake;
 	private Array<NetListener> listeners = new Array<NetListener>();
 
-
 	public NetClient() {
 		Kryo kryo = this.client.getKryo();
 		kryo.register(Update.class);
@@ -31,7 +30,7 @@ public class NetClient {
 				if(!client.isConnected()) {
 					System.out.println("Connecting...");
 					try {
-						client.connect(5000, "10.111.111.60", 54555, 54777);
+						client.connect(5000, "10.111.250.117", 54555, 54777);
 					} catch (IOException e) {
 						System.out.println("Failed to Connect.");
 					}
