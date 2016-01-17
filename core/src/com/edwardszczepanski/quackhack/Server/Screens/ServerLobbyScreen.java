@@ -27,6 +27,10 @@ public class ServerLobbyScreen implements Screen {
 
     public void update(float delta){
         handleInput(delta);
+        hud.update(delta);
+        if(hud.getTime() == 0){
+        	game.setScreen(new PlayScreen(game));
+        }
     }
 
     @Override
@@ -66,5 +70,9 @@ public class ServerLobbyScreen implements Screen {
     public void dispose() {
         hud.dispose();
     }
+
+	public void reset() {
+		hud.reset();
+	}
 
 }

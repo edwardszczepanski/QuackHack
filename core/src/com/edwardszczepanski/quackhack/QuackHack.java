@@ -8,7 +8,7 @@ import com.edwardszczepanski.quackhack.Client.Screens.ControlScreen;
 import com.edwardszczepanski.quackhack.Client.Screens.LobbyScreen;
 import com.edwardszczepanski.quackhack.Net.NetClient;
 import com.edwardszczepanski.quackhack.Net.NetServer;
-import com.edwardszczepanski.quackhack.Server.Screens.PlayScreen;
+import com.edwardszczepanski.quackhack.Server.Screens.ServerLobbyScreen;
 
 /**
  * Created by edwardszc on 1/15/16.
@@ -32,6 +32,8 @@ public class QuackHack extends Game {
     
     private LobbyScreen   cLS;
     private ControlScreen cCS;
+    
+    private ServerLobbyScreen sSL;
 	
 	@Override
 	public void create () {		
@@ -42,13 +44,13 @@ public class QuackHack extends Game {
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			// Run server
 			server = new NetServer();
-			setScreen(new PlayScreen(game));
+			setScreen(getServerLobbyScreen());
 
 		} else {
 			// Run client
 			client = new NetClient();
 
-			setScreen(new ControlScreen(game));
+			setScreen(new LobbyScreen(game));
 
 		}
 	}
@@ -89,5 +91,12 @@ public class QuackHack extends Game {
 			cCS = new ControlScreen(this);
 		}
 		return cCS;
+	}
+
+	public ServerLobbyScreen getServerLobbyScreen() {
+		if(sSL == null) {
+			sSL = new ServerLobbyScreen(this);
+		}
+		return sSL;
 	}
 }
