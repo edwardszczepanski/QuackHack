@@ -53,7 +53,7 @@ public class MobileDisplay implements Disposable{
         table.getCell(heading).spaceBottom(100);
         table.row();
 
-        table.debug(); // This enables all the debug lines
+        //table.debug(); // This enables all the debug lines
         stage.addActor(table);
 
 

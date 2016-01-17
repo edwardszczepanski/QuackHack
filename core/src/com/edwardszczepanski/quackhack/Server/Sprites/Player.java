@@ -46,13 +46,13 @@ public class Player extends Sprite{
         defineLights();
     }
     public void defineLights(){
-        pointLight = new PointLight(PlayScreen.rayHandler, 150, Color.WHITE, 3f * 1.5f*64/ QuackHack.PPM,0,0);
+        pointLight = new PointLight(PlayScreen.rayHandler, 150, new Color((float)(Math.random() * 2f), (float)(Math.random() * 2), (float)(Math.random() * 2f), 1f), 3f * 1.5f*64/ QuackHack.PPM,0,0);
         pointLight.setSoftnessLength(0f);
         pointLight.attachToBody(b2body);
     }
 
     public void update(float delta){
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }
 
     public void definePlayer(){
